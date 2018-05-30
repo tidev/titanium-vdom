@@ -1,0 +1,25 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended",
+        "tslint-eslint-rules"
+    ],
+    "jsRules": {},
+    "rules": {
+        "arrow-parens": [true, "ban-single-arg-parens"],
+        "interface-name": [true, "never-prefix"],
+        "max-line-length": false,
+        "no-trailing-whitespace": [true, "ignore-comments"],
+        "object-literal-sort-keys": false,
+        "quotemark": [true, "single"],
+        "trailing-comma": false,
+        "variable-name": [
+            true,
+            "ban-keywords",
+            "check-format",
+            "allow-pascal-case",
+            "allow-leading-underscore"
+        ]
+    },
+    "rulesDirectory": []
+}
