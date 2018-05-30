@@ -18,6 +18,14 @@
   ],
   "author": "Axway Appcelerator",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/appcelerator/titanium-vdom.git"
+  },
+  "bugs": {
+    "url": "https://github.com/appcelerator/titanium-vdom/issues"
+  },
+  "homepage": "https://github.com/appcelerator/titanium-vdom#readme",
   "devDependencies": {
     "@types/jasmine": "^2.8.7",
     "@types/titanium": "^7.1.0",
