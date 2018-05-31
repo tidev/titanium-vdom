@@ -1,10 +1,18 @@
 import { InvisibleElement, TitaniumElement } from '../../../src/elements';
 
+import { createElement } from '../helpers';
+
 describe('InvisbleElement', () => {
+    let rootElement: TitaniumElement;
+    let proxyElement: InvisibleElement;
+
+    beforeEach(() => {
+        rootElement = createElement('View');
+        proxyElement = new InvisibleElement('Proxy');
+    });
+
     it('should insert child element after being added to parent', () => {
-        const rootElement = createTestElement('Root');
-        const viewElement = createTestElement('View 1');
-        const proxyElement = new InvisibleElement('proxy');
+        const viewElement = createElement('Label');
         proxyElement.appendChild(viewElement);
         rootElement.appendChild(proxyElement);
 
@@ -14,9 +22,7 @@ describe('InvisbleElement', () => {
     });
 
     it('should lift up element to parent', () => {
-        const rootElement = createTestElement('Root');
-        const viewElement = createTestElement('View 1');
-        const proxyElement = new InvisibleElement('proxy');
+        const viewElement = createElement('View');
         rootElement.appendChild(proxyElement);
         proxyElement.appendChild(viewElement);
 
@@ -26,11 +32,9 @@ describe('InvisbleElement', () => {
     });
 
     it('should insert child view at correct position', () => {
-        const rootElement = createTestElement('Root');
-        const view1Element = createTestElement('View 1');
-        const view2Element = createTestElement('View 2');
-        const view3Element = createTestElement('View 3');
-        const proxyElement = new InvisibleElement('proxy');
+        const view1Element = createElement('View');
+        const view2Element = createElement('View');
+        const view3Element = createElement('View');
         rootElement.appendChild(view1Element);
         rootElement.appendChild(proxyElement);
         rootElement.appendChild(view3Element);
@@ -41,9 +45,3 @@ describe('InvisbleElement', () => {
         expect(rootView.children[1]).toEqual(view2Element.titaniumView as Titanium.UI.View);
     });
 });
-
-function createTestElement(title: string) {
-    const view = new TitaniumElement('View', o => Ti.UI.createView(o));
-    view.setAttribute('title', title);
-    return view;
-}
