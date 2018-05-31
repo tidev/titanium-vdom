@@ -5,7 +5,6 @@ module.exports = config => {
       'src/**/*.ts',
       'test/**/*.ts'
     ],
-    logLevel: config.LOG_DEBUG, 
     preprocessors: {
       'src/**/*.ts': [ 'karma-typescript' ],
       'test/**/*.ts': [ 'karma-typescript' ]
