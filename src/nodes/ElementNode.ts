@@ -19,10 +19,10 @@ export class ElementNode extends AbstractNode implements ChildNodeInterface, Par
 
     private _children: ElementCollection | null = null;
 
-    constructor(nodeName: string) {
+    constructor(tagName: string) {
         super();
 
-        this.nodeName = nodeName;
+        this.tagName = tagName;
         this.nodeType = NodeType.Element;
 
         this.attributes = new Map<string, any>();
@@ -113,6 +113,6 @@ export class ElementNode extends AbstractNode implements ChildNodeInterface, Par
     }
 
     public toString(): string {
-        return `${this.constructor.name}(${this.nodeName})`;
+        return `${this.constructor.name}(${this.tagName})`;
     }
 }

@@ -4,7 +4,7 @@ export class TextNode extends AbstractTextualNode {
     constructor(text: string) {
         super(text);
 
-        this.nodeName = '#text';
+        this.tagName = '#text';
         this.nodeType = NodeType.Text;
     }
 }

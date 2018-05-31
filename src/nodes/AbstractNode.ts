@@ -10,7 +10,7 @@ export enum NodeType {
 
 export abstract class AbstractNode {
 
-    public nodeName: string = '';
+    public tagName: string = '';
 
     public nodeType: NodeType | null = null;
 
@@ -37,6 +37,14 @@ export abstract class AbstractNode {
 
     set nodeValue(value: string | null) {
         // Will be overriden by comment and text nodes
+    }
+
+    get innerHTML(): string {
+        return '';
+    }
+
+    get outerHTML(): string {
+        return `<${this.tagName}></${this.tagName}>`;
     }
 
     get parentElement(): ElementNode | null {

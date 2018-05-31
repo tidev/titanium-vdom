@@ -19,8 +19,8 @@ export class TitaniumElement extends AbstractElement {
 
     private proxyCreated: boolean = false;
 
-    constructor(nodeName: string, createProxy: ProxyFactory) {
-        super(nodeName);
+    constructor(tagName: string, createProxy: ProxyFactory) {
+        super(tagName);
 
         this.createProxy = createProxy;
     }
@@ -92,7 +92,7 @@ export class TitaniumElement extends AbstractElement {
             return;
         }
 
-        Ti.API.debug(`${this.nodeName} has no property ${propertyName} or matching setter ${setterName} to set attribute ${name}.`);
+        Ti.API.debug(`${this.tagName} has no property ${propertyName} or matching setter ${setterName} to set attribute ${name}.`);
     }
 
     public hasAttributeAccessor(name: string): boolean {
