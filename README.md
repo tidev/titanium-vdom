@@ -15,8 +15,8 @@ Open source contributions are greatly appreciated! If you have a bugfix, improve
 
 ## Getting Help
 
-If you have questions about the Socket.IO module for Titanium, feel free to reach out on Stackoverflow or the
-`#helpme` channel on [TiSlack](http://tislack.org). In case you find a bug, create a [new issue](/issues/new)
+This is a supporting library to integrate Angular and Vue.js with Titanium. If you have questions about this library in combination with either Angular or Vue.js, feel free to reach out on Stackoverflow or the corresponding channels
+`#titanium-angular` or `titanium-vue` on [TiSlack](http://tislack.org). In case you find a bug related to this library, create a [new issue](/issues/new)
 or open a [new JIRA ticket](https://jira.appcelerator.org).
 
 ## License
