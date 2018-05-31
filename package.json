@@ -35,7 +35,6 @@
     "karma-jasmine": "^1.1.2",
     "karma-min-reporter": "^0.1.0",
     "karma-notify-reporter": "^1.0.1",
-    "karma-titanium-launcher": "file:../karma-titanium-launcher",
     "karma-typescript": "^3.0.12",
     "tslint": "^5.10.0",
     "tslint-config-airbnb": "^5.8.0",

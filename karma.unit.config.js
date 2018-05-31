@@ -10,13 +10,6 @@ module.exports = config => {
       'test/**/*.ts': [ 'karma-typescript' ]
     },
     reporters: [ 'progress', 'karma-typescript' ],
-    browsers: [ 'ios' ],
-    customLaunchers: {
-      ios: {
-        base: 'Titanium',
-        platform: 'ios'
-      }
-    },
     karmaTypescriptConfig: {
       tsconfig: './tsconfig.json',
       compilerOptions: {
