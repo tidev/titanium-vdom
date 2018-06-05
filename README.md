@@ -1,5 +1,7 @@
 # Titanium Virtual DOM
 
+[![Coverage Status](https://coveralls.io/repos/github/appcelerator/titanium-vdom/badge.svg?branch=master)](https://coveralls.io/github/appcelerator/titanium-vdom?branch=master)
+
 Virtual DOM abstraction which serves as the connecting piece to integrate Angular and Vue.js with Titanium.
 
 ## Development guide
