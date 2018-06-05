@@ -2,7 +2,7 @@ import { AbstractElement, InvisibleElement } from '.';
 import { AbstractNode, ElementNode, EventCallback, NodeType, TextNode } from '..';
 import { camelize, capitalizeFirstLetter, runs } from '../utility';
 
-type ProxyFactory<T extends Titanium.UI.View> = (options: any) => T;
+export type ProxyFactory<T extends Titanium.UI.View> = (options: any) => T;
 
 export interface ViewMetadata<T extends Titanium.UI.View> {
     detached?: boolean;
