@@ -110,13 +110,16 @@ export class TitaniumElement<T extends Titanium.UI.View> extends AbstractElement
         let updatedText = '';
         for (let child = this.firstChild; child !== null; child = child.nextSibling) {
             if (child instanceof TextNode) {
-                updatedText = child.nodeValue;
+                updatedText += child.nodeValue;
             }
         }
         updatedText = updatedText.replace(/^\s+|\s+$/g, '');
         if (updatedText !== '') {
-            const possibleProperties = ['text', 'title'];
-            for (const textProperty of possibleProperties) {
+            let textPropertyCanditates = ['text', 'title'];
+            if (runs('ios') && this.titaniumView.apiName === 'Ti.UI.Button') {
+                textPropertyCanditates = ['title'];
+            }
+            for (const textProperty of textPropertyCanditates) {
                 if (this.hasAttributeAccessor(textProperty)) {
                     this.setAttribute(textProperty, updatedText, null);
                     break;
