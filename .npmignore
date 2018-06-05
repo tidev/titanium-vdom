@@ -1,0 +1,8 @@
+coverage/
+src/
+test/
+.travis.yaml
+karma*.js
+tsconfig.json
+tslint.json
+*.tgz
