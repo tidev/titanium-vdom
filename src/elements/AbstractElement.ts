@@ -5,14 +5,14 @@ export abstract class AbstractElement extends ElementNode {
         return this.parentElement instanceof AbstractElement ? this.parentElement : null;
     }
 
-    public static findSingleVisualElement(node: AbstractElement): TitaniumElement {
+    public static findSingleVisualElement<T extends Titanium.UI.View>(node: AbstractElement): TitaniumElement<T> {
         if (node instanceof TitaniumElement) {
             return node;
         }
 
         let visualElement = null;
         try {
-            visualElement = AbstractElement.findSingleVisualElementRecursive(node.children);
+            visualElement = AbstractElement.findSingleVisualElementRecursive<T>(node.children);
         } catch (e) {
             throw new Error(`No suitable visual element found within ${node}. Reason: ${e.message}`);
         }
@@ -20,7 +20,7 @@ export abstract class AbstractElement extends ElementNode {
         return visualElement;
     }
 
-    private static findSingleVisualElementRecursive(elements: ElementCollection, nestingLevel: number = 0): TitaniumElement {
+    private static findSingleVisualElementRecursive<T extends Titanium.UI.View>(elements: ElementCollection, nestingLevel: number = 0): TitaniumElement<T> {
         if (elements.length === 0) {
             throw new Error(`Reached buttom of tree without finding at least one visual element (nesting level: ${nestingLevel}).`);
         }

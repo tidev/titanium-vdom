@@ -4,7 +4,7 @@ import { TitaniumElement } from '../../src/elements/TitaniumElement';
 import { createElement } from './helpers';
 
 describe('ElementCollection', () => {
-    let rootNode: TitaniumElement;
+    let rootNode: TitaniumElement<Titanium.UI.View>;
     let collection: ElementCollection;
 
     beforeEach(() => {

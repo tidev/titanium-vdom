@@ -2,30 +2,30 @@ import { AbstractElement, InvisibleElement } from '.';
 import { AbstractNode, ElementNode, EventCallback, NodeType, TextNode } from '..';
 import { camelize, capitalizeFirstLetter, runs } from '../utility';
 
-export type ProxyFactory = (options: object) => Titanium.Proxy;
+type ProxyFactory<T extends Titanium.UI.View> = (options: any) => T;
 
-export interface ViewMetadata {
+export interface ViewMetadata<T extends Titanium.UI.View> {
     detached?: boolean;
-    create?: ProxyFactory;
+    create?: ProxyFactory<T>;
 }
 
-export class TitaniumElement extends AbstractElement {
+export class TitaniumElement<T extends Titanium.UI.View> extends AbstractElement {
 
-    public meta: ViewMetadata = {};
+    public meta: ViewMetadata<T> = {};
 
-    private createProxy: ProxyFactory;
+    private createProxy: ProxyFactory<T>;
 
-    private _titaniumProxy: Titanium.Proxy | null = null;
+    private _titaniumProxy: T | null = null;
 
     private proxyCreated: boolean = false;
 
-    constructor(tagName: string, createProxy: ProxyFactory) {
+    constructor(tagName: string, createProxy: ProxyFactory<T>) {
         super(tagName);
 
         this.createProxy = createProxy;
     }
 
-    get titaniumView(): Titanium.Proxy {
+    get titaniumView(): T {
         if (this._titaniumProxy === null) {
             const creationProperties: { [k: string]: any } = {};
             this.attributes.forEach((attributeValue, attributeName) => {
@@ -169,13 +169,13 @@ export class TitaniumElement extends AbstractElement {
         }
     }
 
-    private insertChild(element: TitaniumElement, atIndex?: number | null): void {
+    private insertChild<U extends Titanium.UI.View>(element: TitaniumElement<U>, atIndex?: number | null): void {
         if (element.meta.detached) {
             return;
         }
 
-        const parentView = this.titaniumView as Titanium.UI.View;
-        const childView = element.titaniumView as Titanium.UI.View;
+        const parentView = this.titaniumView;
+        const childView = element.titaniumView;
 
         if (atIndex === null || atIndex === undefined) {
             parentView.add(childView);
@@ -201,8 +201,8 @@ export class TitaniumElement extends AbstractElement {
         }
 
         const visualElement = AbstractElement.findSingleVisualElement(element);
-        const childTitaniumView = visualElement.titaniumView as Titanium.UI.View;
-        const childIndex = (this.titaniumView as Titanium.UI.View).children.indexOf(childTitaniumView);
+        const childTitaniumView = visualElement.titaniumView;
+        const childIndex = this.titaniumView.children.indexOf(childTitaniumView);
         if (childIndex !== -1) {
             return childIndex;
         }
