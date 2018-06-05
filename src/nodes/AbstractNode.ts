@@ -131,12 +131,11 @@ export abstract class AbstractNode {
 
         const previousChild = oldChild._previousSibling;
         const nextChild = oldChild._nextSibling;
-        if (previousChild === oldChild) {
-            return;
+        if (previousChild !== oldChild) {
+            previousChild._nextSibling = nextChild;
+            nextChild._previousSibling = previousChild;
+            oldChild._previousSibling = oldChild._nextSibling = oldChild;
         }
-        previousChild._nextSibling = nextChild;
-        nextChild._previousSibling = previousChild;
-        oldChild._previousSibling = oldChild._nextSibling = oldChild;
 
         this.childNodes.invalidateCache();
     }
