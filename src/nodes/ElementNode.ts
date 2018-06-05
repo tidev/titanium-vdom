@@ -108,6 +108,12 @@ export class ElementNode extends AbstractNode implements ChildNodeInterface, Par
         this.parentNode.removeChild(this);
     }
 
+    public removeChild(oldChild: AbstractNode): void {
+        super.removeChild(oldChild);
+
+        this.children.invalidateCache();
+    }
+
     public updateText(): void {
         // Overriden by actual element implementations
     }
