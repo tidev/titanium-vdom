@@ -123,9 +123,14 @@ export abstract class AbstractNode {
             throw new Error(`Child node ${oldChild} not found inside ${this}`);
         }
 
+        if (this.firstChild === oldChild) {
+            this.firstChild = oldChild.nextSibling;
+        }
+
+        oldChild.parentNode = null;
+
         const previousChild = oldChild._previousSibling;
         const nextChild = oldChild._nextSibling;
-
         if (previousChild === oldChild) {
             return;
         }
@@ -150,6 +155,8 @@ export abstract class AbstractNode {
 
         if (referenceNode === null) {
             referenceNode = this.firstChild;
+        } else if (referenceNode === this.firstChild) {
+            this.firstChild = newNode;
         }
 
         if (referenceNode) {
