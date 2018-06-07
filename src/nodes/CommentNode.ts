@@ -5,7 +5,7 @@ export class CommentNode extends AbstractTextualNode {
     constructor(text: string) {
         super(text);
 
-        this.tagName = '#comment';
+        this.nodeName = '#comment';
         this.nodeType = NodeType.Comment;
     }
 }

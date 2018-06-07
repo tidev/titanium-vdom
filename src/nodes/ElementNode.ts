@@ -13,6 +13,8 @@ export type EventCallback = (event: any) => any;
  */
 export class ElementNode extends AbstractNode implements ChildNodeInterface, ParentNodeInterface {
 
+    public tagName: string;
+
     public attributes: Map<string, any>;
 
     public events: Map<string, Set<EventCallback>>;
@@ -24,12 +26,20 @@ export class ElementNode extends AbstractNode implements ChildNodeInterface, Par
     constructor(tagName: string) {
         super();
 
-        this.tagName = tagName;
+        this.nodeName = this.tagName = tagName;
         this.nodeType = NodeType.Element;
 
         this.attributes = new Map<string, any>();
         this.events = new Map<string, Set<EventCallback>>();
         this.styles = new Map<string, any>();
+    }
+
+    get innerHTML(): string {
+        return '';
+    }
+
+    get outerHTML(): string {
+        return `<${this.tagName}></${this.tagName}>`;
     }
 
     get childElementCount() {
@@ -48,6 +58,26 @@ export class ElementNode extends AbstractNode implements ChildNodeInterface, Par
 
     get lastElementChild(): ElementNode | null {
         for (let child = this.lastChild; child !== null; child = child.previousSibling) {
+            if (child.nodeType === NodeType.Element) {
+                return child as ElementNode;
+            }
+        }
+
+        return null;
+    }
+
+    get nextElementSibling(): ElementNode | null {
+        for (let child = this.nextSibling; child !== null; child = child.nextSibling) {
+            if (child.nodeType === NodeType.Element) {
+                return child as ElementNode;
+            }
+        }
+
+        return null;
+    }
+
+    get previousElementSibling(): ElementNode | null {
+        for (let child = this.previousSibling; child !== null; child = child.previousSibling) {
             if (child.nodeType === NodeType.Element) {
                 return child as ElementNode;
             }
@@ -76,6 +106,10 @@ export class ElementNode extends AbstractNode implements ChildNodeInterface, Par
 
     public setAttribute(name: string, value: any, namespace?: string | null): void {
         this.attributes.set(name, value);
+    }
+
+    public hasAttribute(name: string): boolean {
+        return this.attributes.has(name);
     }
 
     public getStyle(propertyName: string): any {

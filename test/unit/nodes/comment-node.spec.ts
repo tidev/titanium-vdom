@@ -7,8 +7,8 @@ describe('CommentNode', () => {
         commentNode = new CommentNode('comment');
     });
 
-    it('should have #comment tag name', () => {
-        expect(commentNode.tagName).toEqual('#comment');
+    it('should have #comment node name', () => {
+        expect(commentNode.nodeName).toEqual('#comment');
     });
 
     it('should have comment node type', () => {
