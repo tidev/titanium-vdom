@@ -13,7 +13,14 @@ module.exports = config => {
     karmaTypescriptConfig: {
       tsconfig: './tsconfig.json',
       compilerOptions: {
-        sourceMap: true
+        target: 'es5',
+        module: 'commonjs',
+        sourceMap: true,
+        lib: [
+          "es2015",
+          "es2015.iterable"
+        ],
+        downlevelIteration: true
       },
       include: [ './test/**/*.spec.ts' ]
     },
