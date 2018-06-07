@@ -146,6 +146,8 @@ export abstract class AbstractNode {
      * @param referenceNode 
      */
     public insertBefore(newNode: AbstractNode, referenceNode: AbstractNode | null): void {
+        this.ensurePreInsertionValidity(newNode, referenceNode);
+
         if (newNode.parentNode !== null) {
             newNode.parentNode.removeChild(newNode);
         }
@@ -168,5 +170,15 @@ export abstract class AbstractNode {
         }
 
         this.childNodes.invalidateCache();
+    }
+
+    private ensurePreInsertionValidity(newNode: AbstractNode, referenceNode: AbstractNode | null) {
+        if (this.nodeType !== NodeType.Element) {
+            throw new Error(`Tried to insert ${newNode} into ${this}. This operation would yield in an invalid DOM tree.`);
+        }
+
+        if (referenceNode && referenceNode.parentNode !== this) {
+            throw new Error(`Tried to insert ${newNode} into ${this} before ${referenceNode} but the reference node has a different parent. This operation would yield in an invalid DOM tree.`);
+        }
     }
 }
