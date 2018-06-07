@@ -1,4 +1,5 @@
-import { AbstractNode, NodeListInterface } from '.';
+import { NodeListInterface } from './NodeListInterface';
+import { AbstractNode } from './nodes/AbstractNode';
 
 export class NodeIterator<T extends AbstractNode> implements Iterator<T> {
 

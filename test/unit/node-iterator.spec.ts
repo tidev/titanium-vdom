@@ -1,4 +1,6 @@
-import { ElementCollection, ElementNode, NodeIterator } from '../../src';
+import { ElementNode } from '../../src';
+import { ElementCollection } from '../../src/ElementCollection';
+import { NodeIterator } from '../../src/NodeIterator';
 
 import { createElement } from './helpers';
 

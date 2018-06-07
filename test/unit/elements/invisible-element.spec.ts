@@ -1,4 +1,4 @@
-import { InvisibleElement, TitaniumElement } from '../../../src/elements';
+import { InvisibleElement, TitaniumElement } from '../../../src';
 
 import { createElement } from '../helpers';
 

@@ -1,4 +1,4 @@
-import { AbstractNode } from '.';
+import { AbstractNode } from './nodes/AbstractNode';
 
 export interface NodeListInterface<T extends AbstractNode> extends Iterable<T> {
     length: number;

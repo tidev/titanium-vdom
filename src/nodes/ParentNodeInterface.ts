@@ -1,5 +1,5 @@
-import { ElementNode } from '.';
-import { ElementCollection } from '..';
+import { ElementCollection } from '../ElementCollection';
+import { ElementNode } from './ElementNode';
 
 export interface ParentNodeInterface {
     children: ElementCollection;

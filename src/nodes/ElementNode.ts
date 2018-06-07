@@ -1,5 +1,7 @@
-import { AbstractNode, ChildNodeInterface, NodeType, ParentNodeInterface } from '.';
-import { ElementCollection } from '..';
+import { ElementCollection } from '../ElementCollection';
+import { AbstractNode, NodeType } from './AbstractNode';
+import { ChildNodeInterface } from './ChildNodeInterface';
+import { ParentNodeInterface } from './ParentNodeInterface';
 
 export type EventCallback = (event: any) => any;
 

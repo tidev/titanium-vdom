@@ -1,5 +1,5 @@
+import { TitaniumElement } from '../../src';
 import { ElementCollection } from '../../src/ElementCollection';
-import { TitaniumElement } from '../../src/elements/TitaniumElement';
 
 import { createElement } from './helpers';
 

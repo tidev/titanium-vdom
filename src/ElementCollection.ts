@@ -1,9 +1,7 @@
-import {
-    CollectionIndexCache,
-    ElementNode,
-    NodeIterator,
-    NodeListInterface
-} from '.';
+import { CollectionIndexCache } from './CollectionIndexCache';
+import { NodeIterator } from './NodeIterator';
+import { NodeListInterface } from './NodeListInterface';
+import { ElementNode } from './nodes/ElementNode';
 
 export class ElementCollection implements NodeListInterface<ElementNode> {
     private _rootNode: ElementNode;

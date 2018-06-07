@@ -1,6 +1,9 @@
-import { AbstractElement, InvisibleElement } from '.';
-import { AbstractNode, ElementNode, EventCallback, NodeType, TextNode } from '..';
-import { camelize, capitalizeFirstLetter, runs } from '../utility';
+import { AbstractNode } from '../nodes/AbstractNode';
+import { ElementNode, EventCallback } from '../nodes/ElementNode';
+import { TextNode } from '../nodes/TextNode';
+import { camelize, capitalizeFirstLetter, findSingleVisualElement, runs } from '../utility';
+import { AbstractElement } from './AbstractElement';
+import { InvisibleElement } from './InvisibleElement';
 
 export type ProxyFactory<T extends Titanium.UI.View> = (options: any) => T;
 
@@ -203,7 +206,7 @@ export class TitaniumElement<T extends Titanium.UI.View> extends AbstractElement
             return null;
         }
 
-        const visualElement = AbstractElement.findSingleVisualElement(element);
+        const visualElement = findSingleVisualElement(element);
         const childTitaniumView = visualElement.titaniumView;
         const childIndex = this.titaniumView.children.indexOf(childTitaniumView);
         if (childIndex !== -1) {

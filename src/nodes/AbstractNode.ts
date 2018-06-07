@@ -1,5 +1,5 @@
-import { ElementNode } from '.';
 import { ChildNodeList } from '../ChildNodeList';
+import { ElementNode } from './ElementNode';
 
 export enum NodeType {
     Element = 1,

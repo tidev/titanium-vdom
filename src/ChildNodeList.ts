@@ -1,9 +1,7 @@
-import {
-    AbstractNode,
-    CollectionIndexCache,
-    NodeIterator,
-    NodeListInterface
-} from '.';
+import { CollectionIndexCache } from './CollectionIndexCache';
+import { NodeIterator } from './NodeIterator';
+import { NodeListInterface } from './NodeListInterface';
+import { AbstractNode } from './nodes/AbstractNode';
 
 export class ChildNodeList implements NodeListInterface<AbstractNode> {
     private _rootNode: AbstractNode;

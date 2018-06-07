@@ -1,5 +1,7 @@
-import { AbstractElement, TitaniumElement } from '.';
-import { AbstractNode } from '..';
+import { AbstractNode } from '../nodes/AbstractNode';
+import { findSingleVisualElement } from '../utility';
+import { AbstractElement } from './AbstractElement';
+import { TitaniumElement } from './TitaniumElement';
 
 /**
  * Representation of all elements that are not associated with a Titanium
@@ -38,7 +40,7 @@ export class InvisibleElement extends AbstractElement {
 
     public getAttribute(name: string): any {
         try {
-            const visualElement = AbstractElement.findSingleVisualElement(this);
+            const visualElement = findSingleVisualElement(this);
             return visualElement.getAttribute(name);
         } catch (e) {
             return super.getAttribute(name);
@@ -49,7 +51,7 @@ export class InvisibleElement extends AbstractElement {
         super.setAttribute(name, value, namespace);
 
         try {
-            const visualElement = AbstractElement.findSingleVisualElement(this);
+            const visualElement = findSingleVisualElement(this);
             visualElement.setAttribute(name, value, namespace);
         } catch (e) {
             // Do nothing of no visual element was found

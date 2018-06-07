@@ -1,4 +1,4 @@
-import { AbstractNode } from '.';
+import { AbstractNode } from './AbstractNode';
 
 export abstract class AbstractTextualNode extends AbstractNode {
     constructor(text: string) {

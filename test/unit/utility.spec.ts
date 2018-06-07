@@ -1,4 +1,7 @@
-import { camelize, capitalizeFirstLetter, runs } from '../../src/utility';
+import { InvisibleElement } from '../../src';
+import { camelize, capitalizeFirstLetter, findSingleVisualElement, runs } from '../../src/utility';
+
+import { createElement } from './helpers';
 
 describe('utility', () => {
     describe('camelize', () => {
@@ -27,5 +30,30 @@ describe('utility', () => {
                 expect(runs('ios')).toBeTruthy();
             });
         }
+    });
+
+    describe('findSingleVisualElement', () => {
+        it('should return passed element if visual', () => {
+            const childElement = createElement('View');
+            const foundVisualElement = findSingleVisualElement(childElement);
+
+            expect(foundVisualElement).toBe(childElement);
+        });
+
+        it('should throw if more than one child element', () => {
+            const proxyElement = new InvisibleElement('Proxy');
+            proxyElement.appendChild(createElement('View'));
+            proxyElement.appendChild(createElement('View'));
+
+            expect(() => findSingleVisualElement(proxyElement)).toThrow();
+        });
+
+        it('should return first visual element found', () => {
+            const proxyElement = new InvisibleElement('Proxy');
+            proxyElement.appendChild(createElement('View'));
+            const foundVisualElement = findSingleVisualElement(proxyElement);
+
+            expect(foundVisualElement).toBeTruthy();
+        });
     });
 });
