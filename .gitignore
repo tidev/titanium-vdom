@@ -9,5 +9,6 @@ node_modules/
 # Build output dir
 dist/
 
-# Test output
+# Test data
 coverage
+.coveralls.yml
