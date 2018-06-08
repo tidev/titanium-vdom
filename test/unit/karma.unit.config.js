@@ -4,7 +4,7 @@ module.exports = config => {
     config.set(Object.assign(base, {
         karmaTypescriptConfig: Object.assign(base.karmaTypescriptConfig, {
             reports: {
-                html: '../../coverage',
+                html: 'coverage',
                 'text-summary': null
             }
         }),
