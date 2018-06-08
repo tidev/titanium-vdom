@@ -1,6 +1,6 @@
-import { ElementNode, TextNode, TitaniumElement } from '../../../src';
+import { ElementNode, TextNode, TitaniumElement } from 'vdom/index';
 
-import { createElement } from '../helpers';
+import { createElement } from '../../helpers';
 
 describe('TitaniumElement', () => {
     let element: TitaniumElement<any>;

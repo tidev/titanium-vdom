@@ -1,4 +1,4 @@
-import { CommentNode, NodeType } from '../../../src';
+import { CommentNode, NodeType } from 'vdom/index';
 
 describe('CommentNode', () => {
     let commentNode: CommentNode;

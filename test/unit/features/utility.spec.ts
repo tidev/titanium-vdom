@@ -1,7 +1,7 @@
-import { InvisibleElement } from '../../src';
-import { camelize, capitalizeFirstLetter, findSingleVisualElement, runs } from '../../src/utility';
+import { InvisibleElement } from 'vdom/index';
+import { camelize, capitalizeFirstLetter, findSingleVisualElement, runs } from 'vdom/utility';
 
-import { createElement } from './helpers';
+import { createElement } from '../helpers';
 
 describe('utility', () => {
     describe('camelize', () => {

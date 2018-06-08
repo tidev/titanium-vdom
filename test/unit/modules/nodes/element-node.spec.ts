@@ -1,4 +1,4 @@
-import { ElementNode, TextNode } from '../../../src';
+import { ElementNode, TextNode } from 'vdom/index';
 
 describe('ElementNode', () => {
     let parent: ElementNode;

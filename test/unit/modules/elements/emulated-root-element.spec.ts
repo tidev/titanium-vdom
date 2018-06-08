@@ -1,4 +1,4 @@
-import { EmulatedRootElement } from '../../../src';
+import { EmulatedRootElement } from 'vdom/index';
 
 describe('EmulatedRootElement', () => {
     let rootElement: EmulatedRootElement;

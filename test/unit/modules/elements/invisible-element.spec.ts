@@ -1,6 +1,6 @@
-import { InvisibleElement, TitaniumElement } from '../../../src';
+import { InvisibleElement, TitaniumElement } from 'vdom/index';
 
-import { createElement } from '../helpers';
+import { createElement } from '../../helpers';
 
 describe('InvisbleElement', () => {
     let rootElement: TitaniumElement<Titanium.UI.View>;

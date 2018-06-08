@@ -1,4 +1,4 @@
-import { ElementNode, TextNode } from '../../../src';
+import { ElementNode, TextNode } from 'vdom/index';
 
 describe('AbstractTextualNode', () => {
     let textNode: TextNode;

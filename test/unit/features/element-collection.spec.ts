@@ -1,7 +1,7 @@
-import { TitaniumElement } from '../../src';
-import { ElementCollection } from '../../src/ElementCollection';
+import { ElementCollection } from 'vdom/ElementCollection';
+import { TitaniumElement } from 'vdom/index';
 
-import { createElement } from './helpers';
+import { createElement } from '../helpers';
 
 describe('ElementCollection', () => {
     let rootNode: TitaniumElement<Titanium.UI.View>;

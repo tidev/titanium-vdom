@@ -1,8 +1,8 @@
-import { ElementNode } from '../../src';
-import { ElementCollection } from '../../src/ElementCollection';
-import { NodeIterator } from '../../src/NodeIterator';
+import { ElementCollection } from 'vdom/ElementCollection';
+import { ElementNode } from 'vdom/index';
+import { NodeIterator } from 'vdom/NodeIterator';
 
-import { createElement } from './helpers';
+import { createElement } from '../helpers';
 
 describe('NodeIterator', () => {
     it('should be able to iterate over node list', () => {
