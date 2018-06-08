@@ -265,5 +265,22 @@ describe('ElementNode', () => {
             expect(parent.childElementCount).toEqual(0);
             expect(node.parentElement).toBeNull();
         });
+
+        it('should do nothing if no parent', () => {
+            expect(node.parentElement).toBeNull();
+            node.remove();
+            expect(node.parentElement).toBeNull();
+        });
+    });
+
+    describe('hasAttributes', () => {
+        it('should return true for existing attribute', () => {
+            parent.setAttribute('test', 1);
+            expect(parent.hasAttribute('test')).toBeTruthy();
+        });
+
+        it('should return false if attribute does not exists', () => {
+            expect(parent.hasAttribute('test')).toBeFalsy();
+        });
     });
 });
