@@ -27,6 +27,12 @@ describe('ElementNode', () => {
         it('should return null', () => {
             expect(node.nodeValue).toBeNull();
         });
+
+        it('setter should be noop', () => {
+            expect(node.nodeValue).toBeNull();
+            node.nodeValue = 'foo';
+            expect(node.nodeValue).toBeNull();
+        });
     });
 
     describe('childElementCount', () => {
@@ -209,6 +215,17 @@ describe('ElementNode', () => {
             expect(parent.childNodes.length).toEqual(1);
         });
 
+        it('should update first child if needed', () => {
+            parent.appendChild(node);
+            const secondNode = new ElementNode('second');
+            parent.appendChild(secondNode);
+            parent.appendChild(new ElementNode('third'));
+
+            expect(parent.firstChild).toBe(node);
+            parent.removeChild(node);
+            expect(parent.firstChild).toBe(secondNode);
+        });
+
         it('should throw error if not child of parent', () => {
             expect(() => parent.removeChild(node)).toThrow();
         });
@@ -253,6 +270,34 @@ describe('ElementNode', () => {
             expect(node.nextSibling).toBe(secondNode);
             expect(secondNode.previousSibling).toBe(node);
             expect(secondNode.nextSibling).toBeNull();
+        });
+
+        it('should automatically remove from current parent', () => {
+            parent.appendChild(node);
+            expect(parent.childElementCount).toEqual(1);
+            expect(node.parentElement).toBe(parent);
+
+            const newParent = new ElementNode('new-parent');
+            newParent.appendChild(node);
+
+            expect(parent.childElementCount).toEqual(0);
+            expect(newParent.childElementCount).toEqual(1);
+            expect(node.parentElement).toBe(newParent);
+        });
+
+        describe('pre insertion validity', () => {
+            it('should throw error if parent node is no element node', () => {
+                const textParent = new TextNode('parent');
+                expect(() => textParent.insertBefore(node, null)).toThrow();
+            });
+
+            it('should throw error if reference node is not in same parent', () => {
+                const otherParent = new ElementNode('other-parent');
+                const referenceNode = new ElementNode('ref');
+                otherParent.appendChild(referenceNode);
+
+                expect(() => parent.insertBefore(node, referenceNode)).toThrow();
+            });
         });
     });
 
