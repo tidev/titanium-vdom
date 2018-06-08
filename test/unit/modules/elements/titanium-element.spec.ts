@@ -122,15 +122,6 @@ describe('TitaniumElement', () => {
     });
 
     describe('on', () => {
-        it('should bind event listener', () => {
-            const spy = jasmine.createSpy('clickEventHander');
-            const view = element.titaniumView;
-            element.on('click', spy);
-            view.fireEvent('click', null);
-
-            expect(spy).toHaveBeenCalled();
-        });
-
         it('should lazily bind event listener', () => {
             const spy = jasmine.createSpy('clickEventHander');
             element.on('click', spy);
@@ -138,17 +129,47 @@ describe('TitaniumElement', () => {
 
             expect(spy).toHaveBeenCalled();
         });
+
+        it('should bind single event listener', () => {
+            const spy = jasmine.createSpy('clickEventHander');
+            const view = element.titaniumView;
+            element.on('click', spy);
+            view.fireEvent('click', null);
+
+            expect(spy).toHaveBeenCalled();
+        });
+
+        it('should bind multiple event listeners', () => {
+            const view = element.titaniumView;
+            const spy1 = jasmine.createSpy('clickEventHander1');
+            element.on('click', spy1);
+            const spy2 = jasmine.createSpy('clickEventHander2');
+            element.on('click', spy2);
+            view.fireEvent('click', null);
+
+            expect(spy1).toHaveBeenCalled();
+            expect(spy2).toHaveBeenCalled();
+        });
     });
 
     describe('off', () => {
         it('should remove event listener', () => {
-            const spy = jasmine.createSpy('clickEventHander');
             const view = element.titaniumView;
-            element.on('click', spy);
-            element.off('click', spy);
+            const spy1 = jasmine.createSpy('clickEventHander1');
+            element.on('click', spy1);
+            const spy2 = jasmine.createSpy('clickEventHander2');
+            element.on('click', spy2);
+            element.off('click', spy2);
             view.fireEvent('click', null);
 
-            expect(spy).not.toHaveBeenCalled();
+            expect(spy1).toHaveBeenCalled();
+            expect(spy2).not.toHaveBeenCalled();
+
+            element.off('click', spy1);
+            view.fireEvent('click');
+
+            expect(spy1.calls.count()).toEqual(1);
+            expect(spy2.calls.count()).toEqual(0);
         });
 
         it('should remove event listener set for lazy binding', () => {
