@@ -94,7 +94,7 @@ export class InvisibleElement extends AbstractElement {
         parent.insertIntoVisualTree(child, baseIndex + insideIndex);
     }
 
-    private projectAttributesToVisualElement<T extends Titanium.UI.View>(visualElement: TitaniumElement<T>) {
+    private projectAttributesToVisualElement<T extends Titanium.Proxy>(visualElement: TitaniumElement<T>) {
         for (const [attributeName, attributeValue] of this.attributes) {
             let name = attributeName;
             let namespace = null;
@@ -103,7 +103,7 @@ export class InvisibleElement extends AbstractElement {
                 name = nameParts[1];
                 namespace = nameParts[0];
             }
-            visualElement.setAttribute(attributeName, attributeValue);
+            visualElement.setAttribute(name, attributeValue, namespace);
         }
     }
 

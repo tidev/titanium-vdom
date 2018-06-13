@@ -1,20 +1,21 @@
 import { AbstractNode } from '../nodes/AbstractNode';
-import { ElementNode, EventCallback } from '../nodes/ElementNode';
+import { EventCallback } from '../nodes/ElementNode';
 import { TextNode } from '../nodes/TextNode';
 import { camelize, capitalizeFirstLetter, findSingleVisualElement, runs } from '../utility';
 import { AbstractElement } from './AbstractElement';
 import { InvisibleElement } from './InvisibleElement';
 
-export type ProxyFactory<T extends Titanium.UI.View> = (options: any) => T;
+export type ProxyFactory<T extends Titanium.Proxy> = (options: any) => T;
 
-export interface ViewMetadata<T extends Titanium.UI.View> {
+export interface ViewMetadata {
+    typeName: string;
     detached?: boolean;
-    create?: ProxyFactory<T>;
+    [key: string]: any;
 }
 
-export class TitaniumElement<T extends Titanium.UI.View> extends AbstractElement {
+export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
 
-    public meta: ViewMetadata<T> = {};
+    public meta: ViewMetadata;
 
     private createProxy: ProxyFactory<T>;
 
@@ -22,10 +23,11 @@ export class TitaniumElement<T extends Titanium.UI.View> extends AbstractElement
 
     private proxyCreated: boolean = false;
 
-    constructor(tagName: string, createProxy: ProxyFactory<T>) {
+    constructor(tagName: string, createProxy: ProxyFactory<T>, meta: ViewMetadata) {
         super(tagName);
 
         this.createProxy = createProxy;
+        this.meta = meta;
     }
 
     get titaniumView(): T {
@@ -175,13 +177,17 @@ export class TitaniumElement<T extends Titanium.UI.View> extends AbstractElement
         }
     }
 
-    private insertChild<U extends Titanium.UI.View>(element: TitaniumElement<U>, atIndex?: number | null): void {
+    private insertChild<U extends Titanium.Proxy>(element: TitaniumElement<U>, atIndex?: number | null): void {
         if (element.meta.detached) {
             return;
         }
 
         const parentView = this.titaniumView;
         const childView = element.titaniumView;
+
+        if (!this.isContainerView(parentView)) {
+            throw new Error(`Unable to automatically add children to ${this}. Consider wrapping it in a custom component to manually handle children and make it a detached element.`);
+        }
 
         if (atIndex === null || atIndex === undefined) {
             parentView.add(childView);
@@ -191,6 +197,13 @@ export class TitaniumElement<T extends Titanium.UI.View> extends AbstractElement
                 position: atIndex
             });
         }
+    }
+
+    private isContainerView(view: any): view is Titanium.UI.View {
+        function isDefined(value: any) {
+            return typeof value !== undefined;
+        }
+        return isDefined(view.add) && isDefined(view.insertAt) && isDefined(view.children);
     }
 
     private getTitaniumChildIndexFromNode(node: AbstractNode | null): number | null {
@@ -207,7 +220,10 @@ export class TitaniumElement<T extends Titanium.UI.View> extends AbstractElement
         }
 
         const visualElement = findSingleVisualElement(element);
-        const childTitaniumView = visualElement.titaniumView;
+        const childTitaniumView = visualElement.titaniumView as Titanium.UI.View;
+        if (!this.isContainerView(this.titaniumView)) {
+            throw new Error(`Unable to determine Titanium child view index for ${visualElement}. Parent ${this} is no container view.`);
+        }
         const childIndex = this.titaniumView.children.indexOf(childTitaniumView);
         if (childIndex !== -1) {
             return childIndex;

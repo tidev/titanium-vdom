@@ -18,7 +18,7 @@ export function runs(name: string): boolean {
     return name === Ti.Platform.osname;
 }
 
-export function findSingleVisualElement<T extends Titanium.UI.View>(node: AbstractElement): TitaniumElement<T> {
+export function findSingleVisualElement<T extends Titanium.Proxy>(node: AbstractElement): TitaniumElement<T> {
     if (node instanceof TitaniumElement) {
         return node;
     }
@@ -33,7 +33,7 @@ export function findSingleVisualElement<T extends Titanium.UI.View>(node: Abstra
     return visualElement;
 }
 
-function findSingleVisualElementRecursive<T extends Titanium.UI.View>(elements: ElementCollection, nestingLevel: number = 0): TitaniumElement<T> {
+function findSingleVisualElementRecursive<T extends Titanium.Proxy>(elements: ElementCollection, nestingLevel: number = 0): TitaniumElement<T> {
     if (elements.length === 0) {
         throw new Error(`Reached buttom of tree without finding at least one visual element (nesting level: ${nestingLevel}).`);
     }
