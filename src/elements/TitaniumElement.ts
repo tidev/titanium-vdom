@@ -161,6 +161,17 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
         }
     }
 
+    public removeChild(oldChild: AbstractNode): void {
+        super.removeChild(oldChild);
+
+        if (oldChild instanceof TitaniumElement) {
+            if (!this.isContainerView(this.titaniumView)) {
+                throw new Error(`Unable to remove child ${oldChild} from parent ${this} because remove method is unavailable.`);
+            }
+            this.titaniumView.remove(oldChild.titaniumView);
+        }
+    }
+
     public on(eventName: string, handler: EventCallback): void {
         super.on(eventName, handler);
 
@@ -200,10 +211,11 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
     }
 
     private isContainerView(view: any): view is Titanium.UI.View {
+        const requiredFields = ['add', 'insertAt', 'children', 'remove'];
         function isDefined(value: any) {
             return typeof value !== undefined;
         }
-        return isDefined(view.add) && isDefined(view.insertAt) && isDefined(view.children);
+        return requiredFields.every(fieldName => isDefined(view[fieldName]));
     }
 
     private getTitaniumChildIndexFromNode(node: AbstractNode | null): number | null {
