@@ -4,11 +4,11 @@ module.exports = {
     basePath: '../..',
     frameworks: ['jasmine', 'karma-typescript'],
     files: [
-        'src/**/*.ts',
+        'src/**/!(*d).ts',
         'test/unit/**/*.ts'
     ],
     preprocessors: {
-        'src/**/*.ts': ['karma-typescript'],
+        'src/**/!(*d).ts': ['karma-typescript'],
         'test/unit/**/*.ts': ['karma-typescript']
     },
     reporters: ['progress', 'karma-typescript'],
