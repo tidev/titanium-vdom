@@ -10,6 +10,7 @@ export type ProxyFactory<T extends Titanium.Proxy> = (options: any) => T;
 export interface ViewMetadata {
     typeName: string;
     detached?: boolean;
+    detachChildren?: boolean;
     [key: string]: any;
 }
 
@@ -41,6 +42,7 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
 
             this.events.forEach((handlers, eventName) => {
                 handlers.forEach(handler => {
+                    /* istanbul ignore else */
                     if (this._titaniumProxy) {
                         Ti.API.debug(`Adding event listener for ${eventName} to created proxy.`);
                         this._titaniumProxy.addEventListener(eventName, handler);
@@ -60,11 +62,12 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
         }
 
         const propertyName = camelize(name);
-        if (!Reflect.has(this.titaniumView, propertyName)) {
-            throw new Error(`Unable to get attribute ${name}. ${this} has no matching property named ${propertyName}.`);
+        /* istanbul ignore else: iOS always returns true for property checks */
+        if (Reflect.has(this.titaniumView, propertyName)) {
+            return (this.titaniumView as any)[propertyName];
         }
 
-        return (this.titaniumView as any)[propertyName];
+        return this.getElementAttribute(name);
     }
 
     public getElementAttribute(name: string): any {
@@ -85,19 +88,20 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
         const propertyName = camelize(name);
         const setterName = 'set' + capitalizeFirstLetter(propertyName);
 
-        if (Reflect.has(this.titaniumView, setterName) && typeof (this.titaniumView as any)[setterName] === 'function') {
-            Ti.API.debug(`${this}.setAttribute via setter: ${setterName}(${JSON.stringify(value)})`);
-            (this.titaniumView as any)[setterName](value);
-            return;
-        }
-
         if (Reflect.has(this.titaniumView, propertyName)) {
             Ti.API.debug(`${this}.setAttribute via property: ${propertyName}(${JSON.stringify(value)})`);
             (this.titaniumView as any)[propertyName] = value;
             return;
         }
 
-        Ti.API.debug(`${this.tagName} has no property ${propertyName} or matching setter ${setterName} to set attribute ${name}.`);
+        /* istanbul ignore next */
+        if (Reflect.has(this.titaniumView, setterName) && typeof (this.titaniumView as any)[setterName] === 'function') {
+            Ti.API.debug(`${this}.setAttribute via setter: ${setterName}(${JSON.stringify(value)})`);
+            (this.titaniumView as any)[setterName](value);
+            return;
+        }
+
+        Ti.API.warn(`${this.tagName} has no property ${propertyName} or matching setter ${setterName} to set attribute ${name}.`);
     }
 
     public hasAttributeAccessor(name: string): boolean {
@@ -114,23 +118,31 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
     public updateText(): void {
         let updatedText = '';
         for (let child = this.firstChild; child !== null; child = child.nextSibling) {
+            /* istanbul ignore else */
             if (child instanceof TextNode) {
                 updatedText += child.nodeValue;
             }
         }
         updatedText = updatedText.replace(/^\s+|\s+$/g, '');
-        if (updatedText !== '') {
-            let textPropertyCanditates = ['text', 'title'];
-            if (runs('ios') && this.titaniumView.apiName === 'Ti.UI.Button') {
-                textPropertyCanditates = ['title'];
-            }
-            for (const textProperty of textPropertyCanditates) {
-                if (this.hasAttributeAccessor(textProperty)) {
-                    this.setAttribute(textProperty, updatedText, null);
-                    break;
-                }
+        let textPropertyCanditates = ['text', 'title'];
+        if (runs('ios') && this.titaniumView.apiName === 'Ti.UI.Button') {
+            textPropertyCanditates = ['title'];
+        }
+        for (const textProperty of textPropertyCanditates) {
+            /* istanbul ignore else */
+            if (this.hasAttributeAccessor(textProperty)) {
+                this.setAttribute(textProperty, updatedText, null);
+                break;
             }
         }
+    }
+
+    public isDetached(): boolean {
+        return this.meta.detached || false;
+    }
+
+    public shouldDetachChildren(): boolean {
+        return this.meta.detachChildren || false;
     }
 
     public insertBefore(newNode: AbstractNode, referenceNode: AbstractNode | null): void {
@@ -152,6 +164,10 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
     }
 
     public insertIntoVisualTree(child: AbstractElement, atIndex?: number) {
+        if (child.isDetached() || this.shouldDetachChildren()) {
+            return;
+        }
+
         if (child instanceof TitaniumElement) {
             this.insertChild(child, atIndex);
         } else if (child instanceof InvisibleElement) {
@@ -164,7 +180,9 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
     public removeChild(oldChild: AbstractNode): void {
         super.removeChild(oldChild);
 
+        /* istanbul ignore else */
         if (oldChild instanceof TitaniumElement) {
+            /* istanbul ignore if: mainly For type checking only, probably all views have a remove() method */
             if (!this.isContainerView(this.titaniumView)) {
                 throw new Error(`Unable to remove child ${oldChild} from parent ${this} because remove method is unavailable.`);
             }
@@ -189,13 +207,14 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
     }
 
     private insertChild<U extends Titanium.Proxy>(element: TitaniumElement<U>, atIndex?: number | null): void {
-        if (element.meta.detached) {
+        if (element.isDetached() || this.shouldDetachChildren()) {
             return;
         }
 
         const parentView = this.titaniumView;
         const childView = element.titaniumView;
 
+        /* istanbul ignore if: mainly For type checking only, probably all views have add methods */
         if (!this.isContainerView(parentView)) {
             throw new Error(`Unable to automatically add children to ${this}. Consider wrapping it in a custom component to manually handle children and make it a detached element.`);
         }
@@ -224,7 +243,10 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
         }
 
         let element: AbstractElement | null = null;
-        if (!(node instanceof AbstractElement)) {
+        /* istanbul ignore else: edge case when trying to insert before a non-element node */
+        if (node instanceof AbstractElement) {
+            element = node;
+        } else {
             element = node.nextElementSibling as AbstractElement;
         }
         if (!element) {

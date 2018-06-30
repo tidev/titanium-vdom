@@ -58,10 +58,24 @@ export class InvisibleElement extends AbstractElement {
         }
     }
 
+    public isDetached(): boolean {
+        return super.getAttribute('detached') || false;
+    }
+
+    public shouldDetachChildren(): boolean {
+        return super.getAttribute('detach-children') || false;
+    }
+
     public insertBefore(newChild: AbstractNode, referenceChild: AbstractNode) {
         super.insertBefore(newChild, referenceChild);
 
-        if (newChild instanceof AbstractElement) {
+        /* istanbul ignore if */
+        if (!(newChild instanceof AbstractElement)) {
+            return;
+        }
+
+        /* istanbul ignore else */
+        if (!(this.isDetached() || this.shouldDetachChildren())) {
             this.insertIntoVisualTree(newChild);
 
             for (const child of newChild.children) {
@@ -69,10 +83,10 @@ export class InvisibleElement extends AbstractElement {
                     newChild.insertIntoVisualTree(child);
                 }
             }
+        }
 
-            if (this.firstElementChild === newChild && newChild instanceof TitaniumElement) {
-                this.projectAttributesToVisualElement(newChild);
-            }
+        if (this.firstElementChild === newChild && newChild instanceof TitaniumElement) {
+            this.projectAttributesToVisualElement(newChild);
         }
     }
 
@@ -82,10 +96,8 @@ export class InvisibleElement extends AbstractElement {
             return;
         }
 
-        if (child instanceof TitaniumElement) {
-            if (child.meta.detached) {
-                return;
-            }
+        if (child.isDetached() || this.shouldDetachChildren()) {
+            return;
         }
 
         const baseIndex = this.parentElement !== null ? this.parentElement.children.indexOf(this) : 0;

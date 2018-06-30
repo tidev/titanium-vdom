@@ -107,7 +107,7 @@ describe('InvisbleElement', () => {
         }
     });
 
-    it('should add view to to parent', () => {
+    it('should add view to parent', () => {
         const viewElement = createElement('View');
         rootElement.appendChild(proxyElement);
         proxyElement.appendChild(viewElement);
@@ -131,12 +131,28 @@ describe('InvisbleElement', () => {
         expect(rootView.children[1]).toEqual(view2Element.titaniumView);
     });
 
-    it('should not insert child view that is detached', () => {
+    it('should not insert view of detached Titanium element', () => {
         const viewElement = createElement('View');
         viewElement.meta.detached = true;
         rootElement.appendChild(proxyElement);
         proxyElement.appendChild(viewElement);
 
+        expect(rootElement.titaniumView.children.length).toEqual(0);
+    });
+
+    it('should not insert child view if element itself is detached', () => {
+        const viewElement = createElement('View');
+        proxyElement.setAttribute('detached', true);
+        rootElement.appendChild(proxyElement);
+        proxyElement.appendChild(viewElement);
+        expect(rootElement.titaniumView.children.length).toEqual(0);
+    });
+
+    it('should not insert child view if element itself detaches children', () => {
+        const viewElement = createElement('View');
+        proxyElement.setAttribute('detach-children', true);
+        rootElement.appendChild(proxyElement);
+        proxyElement.appendChild(viewElement);
         expect(rootElement.titaniumView.children.length).toEqual(0);
     });
 });

@@ -17,7 +17,7 @@ export function registerCommonTitaniumElements(registry: TitaniumElementRegistry
     registry.registerElement('PickerRow', () => Ti.UI.createPickerRow, { detached: true, typeName: 'Ti.UI.PickerRow' });
     registry.registerElement('ProgressBar', () => Ti.UI.createProgressBar, { typeName: 'Ti.UI.ProgressBar' });
     registry.registerElement('RefreshControl', () => Ti.UI.createRefreshControl, { detached: true, typeName: 'Ti.UI.RefreshControl' });
-    registry.registerElement('ScrollableView', () => Ti.UI.createScrollableView, { typeName: 'Ti.UI.ScrollableView' });
+    registry.registerElement('ScrollableView', () => Ti.UI.createScrollableView, { detachChildren: true, typeName: 'Ti.UI.ScrollableView' });
     registry.registerElement('ScrollView', () => Ti.UI.createScrollView, { typeName: 'Ti.UI.ScrollView' });
     registry.registerElement('SearchBar', () => Ti.UI.createSearchBar, { typeName: 'Ti.UI.SearchBar' });
     registry.registerElement('Slider', () => Ti.UI.createSlider, { typeName: 'Ti.UI.Slider' });

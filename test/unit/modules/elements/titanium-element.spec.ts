@@ -35,6 +35,7 @@ describe('TitaniumElement', () => {
         it('should get attribute from proxy if created', () => {
             element = createElement('View', { top: topValue });
             const spy = spyOn(element, 'getElementAttribute');
+            // force proxy creation
             const view = element.titaniumView;
             const value = element.getAttribute('top');
             expect(spy).not.toHaveBeenCalled();
@@ -102,6 +103,14 @@ describe('TitaniumElement', () => {
             expect(parentElement.titaniumView.children.length).toEqual(0);
         });
 
+        it('should not insert view into visual tree if parent detaches children', () => {
+            const parentElement = createElement('View');
+            parentElement.meta.detachChildren = true;
+            parentElement.appendChild(element);
+
+            expect(parentElement.titaniumView.children.length).toEqual(0);
+        });
+
         it('should insert view at matching native position', () => {
             const parentElement = createElement('View');
             const firstChild = createElement('View');
@@ -118,6 +127,17 @@ describe('TitaniumElement', () => {
             expect(parentView.children[0]).toEqual(firstChild.titaniumView);
             expect(parentView.children[1]).toEqual(element.titaniumView);
             expect(parentView.children[2]).toEqual(lastChild.titaniumView);
+        });
+    });
+
+    describe('removeChild', () => {
+        it('should remove view from parent', () => {
+            const parentElement = createElement('View');
+            expect(parentElement.titaniumView.children.length).toEqual(0);
+            parentElement.appendChild(element);
+            expect(parentElement.titaniumView.children.length).toEqual(1);
+            parentElement.removeChild(element);
+            expect(parentElement.titaniumView.children.length).toEqual(0);
         });
     });
 

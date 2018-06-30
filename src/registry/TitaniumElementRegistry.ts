@@ -29,11 +29,15 @@ export class TitaniumElementRegistry {
     }
 
     public registerElement<T extends Titanium.Proxy>(tagName: string, resolveFactory: () => ProxyFactory<T>, meta: ViewMetadata): void {
-        Ti.API.trace(`Registering Titanium view <${tagName}> (meta: ${JSON.stringify(meta)})`);
-        this.elements.set(this.namingStrategy.normalizeName(tagName), {
-            resolveFactory,
-            meta: Object.assign({}, this.defaultViewMetadata, meta)
-        });
+        const normalizedTagName = this.namingStrategy.normalizeName(tagName);
+        if (!this.elements.has(normalizedTagName)) {
+            this.elements.set(normalizedTagName, {
+                resolveFactory,
+                meta: Object.assign({}, this.defaultViewMetadata, meta)
+            });
+        } else {
+            Ti.API.warn(`Element <${tagName}> already registered. Unregister the current one before trying to register it again.`);
+        }
     }
 
     public unregisterElement(tagName: string): void {
