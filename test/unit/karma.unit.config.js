@@ -19,7 +19,8 @@ module.exports = config => {
             android: {
                 base: 'Titanium',
                 browserName: 'Android Emulator',
-                platform: 'android'
+                platform: 'android',
+                sdkVersion: '7.2.0.GA'
             }
         },
         browsers: ['android'],
