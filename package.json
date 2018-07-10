@@ -39,6 +39,7 @@
     "karma-helpful-reporter": "^0.3.4",
     "karma-jasmine": "^1.1.2",
     "karma-notify-reporter": "^1.0.1",
+    "karma-titanium-launcher": "^0.1.0",
     "karma-typescript": "^3.0.12",
     "tslint": "^5.10.0",
     "tslint-eslint-rules": "^5.3.1",
