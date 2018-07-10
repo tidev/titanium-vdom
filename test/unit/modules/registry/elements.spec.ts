@@ -9,8 +9,47 @@ const importPromise = import(`../../../../src/registry/elements.${platformName}`
 
 describe('element registration', () => {
     let registry: TitaniumElementRegistry;
-    // tslint:disable-next-line
-    let registerTitaniumElements = (registry: TitaniumElementRegistry) => {};
+    // tslint:disable-next-line:no-empty
+    let registerTitaniumElements = (_: TitaniumElementRegistry) => {};
+    const commonElements = [
+        'ActivityIndicator',
+        'AlertDialog',
+        'Button',
+        'ImageView',
+        'Label',
+        'ListView',
+        'ListSection',
+        'Picker',
+        'PickerColumn',
+        'PickerRow',
+        'ProgressBar',
+        'RefreshControl',
+        'ScrollableView',
+        'ScrollView',
+        'SearchBar',
+        'Slider',
+        'Switch',
+        'Tab',
+        'TabGroup',
+        'TextArea',
+        'TextField',
+        'Toolbar',
+        'View',
+        'WebView',
+        'Window'
+    ];
+    const platformElements: { [k: string]: string[] } = {
+        android: [
+            'CardView'
+        ],
+        ios: [
+            'BlurView',
+            'DashboardView',
+            'DashboardItem',
+            'NavigationWindow',
+            'TabbedBar'
+        ]
+    };
 
     beforeAll(done => {
         importPromise.then(module => {
@@ -29,16 +68,24 @@ describe('element registration', () => {
 
     it('should register common Titanium elements', () => {
         registerTitaniumElements(registry);
-        expect(registry.hasElement('Label')).toBeTruthy();
-        expect(registry.hasElement('View')).toBeTruthy();
+        for (const tagName of commonElements) {
+            expect(registry.hasElement(tagName)).toBeTruthy(`Expected registry to have common element ${tagName}.`);
+        }
+    });
+
+    it('should register platform specific elements', () => {
+        registerTitaniumElements(registry);
+        for (const tagName of platformElements[platformName]) {
+            expect(registry.hasElement(tagName)).toBeTruthy(`Expected registry to have ${platformName} specific element ${tagName}.`);
+        }
     });
 
     it('should register factory function for all elements', () => {
         registerTitaniumElements(registry);
-        const registerdElements = (registry as any).elements as Map<string, any>;
-        registerdElements.forEach((elementMeta, elementName) => {
+        const registeredElements = (registry as any).elements as Map<string, any>;
+        registeredElements.forEach((elementMeta, elementName) => {
             const factoryFunction = registry.getViewFactory(elementName);
-            expect(factoryFunction).toEqual(jasmine.any(Function));
+            expect(factoryFunction).toEqual(jasmine.any(Function), `Expected element ${elementName} to have factory function.`);
         });
     });
 });
