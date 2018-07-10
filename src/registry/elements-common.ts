@@ -4,9 +4,6 @@ export function registerCommonTitaniumElements(registry: TitaniumElementRegistry
     registry.registerElement('ActivityIndicator', () => Ti.UI.createActivityIndicator, { typeName: 'Ti.UI.ActivityIndicator' });
     registry.registerElement('AlertDialog', () => Ti.UI.createAlertDialog, { typeName: 'Ti.UI.AlertDialog' });
     registry.registerElement('Button', () => Ti.UI.createButton, { typeName: 'Ti.UI.Button' });
-    registry.registerElement('DashboardView', () => Ti.UI.createDashboardView, { typeName: 'Ti.UI.DashboardView' });
-    registry.registerElement('DashboardItem', () => Ti.UI.createDashboardItem, { typeName: 'Ti.UI.DashboardItem' });
-    registry.registerElement('DetachedView', () => Ti.UI.createView, { detached: true, typeName: 'Ti.UI.View' });
     registry.registerElement('ImageView', () => Ti.UI.createImageView, { typeName: 'Ti.UI.ImageView' });
     registry.registerElement('Label', () => Ti.UI.createLabel, { typeName: 'Ti.UI.Label' });
     registry.registerElement('ListView', () => Ti.UI.createListView, { detached: true, typeName: 'Ti.UI.ListView' });
