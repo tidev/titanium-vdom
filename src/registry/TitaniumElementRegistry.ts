@@ -35,7 +35,7 @@ export class TitaniumElementRegistry {
                 resolveFactory,
                 meta: Object.assign({}, this.defaultViewMetadata, meta)
             });
-        } else if (Ti) {
+        } else if (typeof Ti !== 'undefined') {
             Ti.API.warn(`Element <${tagName}> already registered. Unregister the current one before trying to register it again.`);
         }
     }
