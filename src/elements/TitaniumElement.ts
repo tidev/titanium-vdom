@@ -74,12 +74,13 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
         return super.getAttribute(name);
     }
 
-    public setAttribute(name: string, value: any, namespace?: string | null): void {
-        if (namespace && !runs(namespace)) {
+    public setAttribute(name: string, value: any, platformName?: string): void {
+        if (platformName && !runs(platformName)) {
+            Ti.API.debug(`Not running on ${platformName}, ignoring attribute ${name}.`);
             return;
         }
 
-        super.setAttribute(name, value, namespace);
+        super.setAttribute(name, value);
 
         if (this.proxyCreated === false) {
             return;
@@ -112,7 +113,7 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
     }
 
     /**
-     * Reads text from all text child nodes and updates the title or text property of the 
+     * Reads text from all text child nodes and updates the title or text property of the
      * underlying Titanium view
      */
     public updateText(): void {
@@ -131,7 +132,7 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
         for (const textProperty of textPropertyCanditates) {
             /* istanbul ignore else */
             if (this.hasAttributeAccessor(textProperty)) {
-                this.setAttribute(textProperty, updatedText, null);
+                this.setAttribute(textProperty, updatedText);
                 break;
             }
         }

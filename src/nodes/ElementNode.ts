@@ -7,7 +7,7 @@ export type EventCallback = (event: any) => any;
 
 /**
  * Represents a default element inside our vdom.
- * 
+ *
  * Indivudal elements inherit from this class and add features in their
  * implementation.
  */
@@ -104,8 +104,12 @@ export class ElementNode extends AbstractNode implements ChildNodeInterface, Par
         return this.attributes.get(name);
     }
 
-    public setAttribute(name: string, value: any, namespace?: string | null): void {
+    public setAttribute(name: string, value: any): void {
         this.attributes.set(name, value);
+    }
+
+    public removeAttribute(name: string) {
+        this.attributes.delete(name);
     }
 
     public hasAttribute(name: string): boolean {

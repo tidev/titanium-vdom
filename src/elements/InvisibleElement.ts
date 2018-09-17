@@ -1,22 +1,22 @@
 import { AbstractNode } from '../nodes/AbstractNode';
-import { findSingleVisualElement } from '../utility';
+import { findSingleVisualElement, runs } from '../utility';
 import { AbstractElement } from './AbstractElement';
 import { TitaniumElement } from './TitaniumElement';
 
 /**
  * Representation of all elements that are not associated with a Titanium
  * view and thus not directly part of the visual tree.
- * 
+ *
  * Used for all elements that are not known to the Titanium element registry.
- * 
+ *
  * As this element is not part of the Titanium visual tree but still can
  * contain Titanium views as its children a special child element handling will
  * be applied. Invisible elements will recursively pass through all of their
  * children to its parent elements. If a Titanium element is reached the child
  * view will be inserted into the Titanium visual tree.
- * 
+ *
  * Example template:
- * 
+ *
  *  <View>
  *      <Label>1</Label>
  *      <SomeComponent>  <-- This is an invisible element
@@ -24,14 +24,14 @@ import { TitaniumElement } from './TitaniumElement';
  *      </SomeComponent>
  *      <Label>3</Label>
  *  </View>
- * 
+ *
  * Resulting visual tree:
- *  
+ *
  *  View
  *      Label 1
  *      Label 2
  *      Label 3
- * 
+ *
  * Likewise a similar handling is applied when setting attributes on invisible
  * elements. All attributes will be passed along child elements until a visual
  * element is reached and the attributes will also be applied to that element.
@@ -47,12 +47,16 @@ export class InvisibleElement extends AbstractElement {
         }
     }
 
-    public setAttribute(name: string, value: any, namespace?: string |  null): void {
-        super.setAttribute(name, value, namespace);
+    public setAttribute(name: string, value: any, platformName?: string): void {
+        if (platformName && !runs(platformName)) {
+            return;
+        }
+
+        super.setAttribute(name, value);
 
         try {
             const visualElement = findSingleVisualElement(this);
-            visualElement.setAttribute(name, value, namespace);
+            visualElement.setAttribute(name, value, platformName);
         } catch (e) {
             // Do nothing of no visual element was found
         }
@@ -109,13 +113,13 @@ export class InvisibleElement extends AbstractElement {
     private projectAttributesToVisualElement<T extends Titanium.Proxy>(visualElement: TitaniumElement<T>) {
         for (const [attributeName, attributeValue] of this.attributes) {
             let name = attributeName;
-            let namespace = null;
+            let platformName;
             const nameParts = attributeName.split(':');
             if (nameParts.length === 2) {
                 name = nameParts[1];
-                namespace = nameParts[0];
+                platformName = nameParts[0];
             }
-            visualElement.setAttribute(name, attributeValue, namespace);
+            visualElement.setAttribute(name, attributeValue, platformName);
         }
     }
 
