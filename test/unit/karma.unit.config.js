@@ -15,12 +15,12 @@ module.exports = config => {
                 browserName: 'iphone',
                 platform: 'ios',
                 sdkVersion: '7.4.0'
-            }, 
+            },
             android: {
                 base: 'Titanium',
                 browserName: 'Android Emulator',
                 platform: 'android',
-                sdkVersion: '7.2.0.GA'
+                sdkVersion: '7.4.0.GA'
             }
         },
         browsers: ['android'],
