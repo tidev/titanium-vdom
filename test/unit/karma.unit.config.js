@@ -9,12 +9,12 @@ module.exports = config => {
             }
         }),
         customLaunchers: {
-            // testing on iOS needs TIMOB-26184 and TIMOB-26179
+            // testing on iOS needs TIMOB-26184 and TIMOB-26179, will probably land with 7.5.0
             ios: {
                 base: 'Titanium',
                 browserName: 'iphone',
                 platform: 'ios',
-                sdkVersion: '7.4.0'
+                sdkVersion: '7.5.0.GA'
             },
             android: {
                 base: 'Titanium',
