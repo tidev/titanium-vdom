@@ -33,8 +33,8 @@
     "@types/jasmine": "^2.8.7",
     "@types/titanium": "^7.3.0",
     "coveralls": "^3.0.1",
-    "jasmine-core": "^3.1.0",
-    "karma": "^2.0.2",
+    "jasmine-core": "^3.2.1",
+    "karma": "^3.0.0",
     "karma-coverage": "^1.1.2",
     "karma-helpful-reporter": "^0.3.4",
     "karma-jasmine": "^1.1.2",
@@ -42,8 +42,8 @@
     "karma-titanium-launcher": "^0.3.0",
     "karma-typescript": "^3.0.12",
     "tslint": "^5.10.0",
-    "tslint-eslint-rules": "^5.3.1",
-    "tslint-jasmine-rules": "^1.3.2",
-    "typescript": "^2.8.3"
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-jasmine-rules": "^1.5.1",
+    "typescript": "^3.1.1"
   }
 }
