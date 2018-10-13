@@ -2,11 +2,14 @@
   "name": "titanium-vdom",
   "version": "0.3.0",
   "description": "A virtual DOM implementation for Titanium",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.prod.json",
+    "build": "npm run clean && npm run build:cjs && npm run build:esm",
+    "build:cjs": "tsc -p tsconfig.prod.cjs.json",
+    "build:esm": "tsc -p tsconfig.prod.esm.json",
+    "clean": "rimraf dist",
     "test": "npm run lint && npm run test:unit",
     "test:unit": "karma start test/unit/karma.unit.config.js",
     "test:dev": "karma start test/unit/karma.dev.config.js",
@@ -30,6 +33,9 @@
     "url": "https://github.com/appcelerator/titanium-vdom/issues"
   },
   "homepage": "https://github.com/appcelerator/titanium-vdom#readme",
+  "dependencies": {
+    "tslib": "^1.9.3"
+  },
   "devDependencies": {
     "@types/jasmine": "^2.8.7",
     "@types/titanium": "^7.3.0",
@@ -42,6 +48,7 @@
     "karma-notify-reporter": "^1.0.1",
     "karma-titanium-launcher": "^0.3.0",
     "karma-typescript": "^3.0.12",
+    "rimraf": "^2.6.2",
     "tslint": "^5.10.0",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-jasmine-rules": "^1.5.1",
