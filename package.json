@@ -46,7 +46,7 @@
     "karma-helpful-reporter": "^0.3.4",
     "karma-jasmine": "^1.1.2",
     "karma-notify-reporter": "^1.0.1",
-    "karma-titanium-launcher": "^0.3.0",
+    "karma-titanium-launcher": "^0.5.2",
     "karma-typescript": "^3.0.12",
     "rimraf": "^2.6.2",
     "tslint": "^5.10.0",
