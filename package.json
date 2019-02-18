@@ -45,6 +45,7 @@
     "karma-coverage": "^1.1.2",
     "karma-helpful-reporter": "^0.3.4",
     "karma-jasmine": "^2.0.1",
+    "karma-mocha-reporter": "^2.2.5",
     "karma-notify-reporter": "^1.1.0",
     "karma-titanium-launcher": "^0.5.3",
     "karma-typescript": "^4.0.0",
