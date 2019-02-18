@@ -1,3 +1,5 @@
+const path = require('path');
+
 const base = require('./karma.base.config');
 
 module.exports = config => {
@@ -23,8 +25,11 @@ module.exports = config => {
                 platform: 'android'
             }
         },
-        reporters: base.reporters.concat([ 'mocha' ]),
         browsers: [ 'android', 'ios' ],
+        reporters: base.reporters.concat([ 'mocha', 'junit' ]),
+        junitReporter: {
+            outputFile: path.resolve(__dirname, '..', '..', 'junit_report.xml')
+        },
         singleRun: true,
         retryLimit: 0,
         captureTimeout: 300000
