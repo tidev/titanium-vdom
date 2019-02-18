@@ -6,9 +6,9 @@ Virtual DOM abstraction which serves as the connecting piece to integrate Angula
 
 ## Development guide
 
-This project uses an expiremental unit testing setup using the new [titanium-karma-runner](https://github.com/appcelerator/titanium-karma-runner). To run unit tests spin up the Karma server using `npm run test:unit`. Now run the titanium-karma-runner app on an iOS simulator or Android emulator and the tests will be run inside that app. Results will be shown in the app itself and coverage data gets written to the `coverage` directory.
+This project uses the [karma-titanium-launcher](https://github.com/appcelerator/karma-titanium-launcher) to run unit tests. Simply run `npm run test:unit` to start Karma and test on an iOS simulator and Android emulator. Results will be shown in the app itself as well as reported to the console and coverage data gets written to the `coverage` directory.
 
-For a rapid TDD setup you can use `npm run test:unit-dev` and Karma will watch for any changes to the source and test files and schedule a new test run everytime. No coverage data will be written in this configuration.
+For a rapid TDD setup you can use `npm run test:dev` and Karma will watch for any changes to the source and test files and schedule a new test run everytime. No coverage data will be written in this configuration.
 
 ## Contributions
 
