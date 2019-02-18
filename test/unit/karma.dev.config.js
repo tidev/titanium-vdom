@@ -1,7 +1,7 @@
 const base = require('./karma.base.config');
 
 const devConfig = Object.assign(base, {
-    reporters: ['helpful', 'notify', 'karma-typescript'],
+    reporters: base.reporters.concat([ 'helpful', 'notify' ]),
     helpfulReporter: {
         clearScreenBeforeEveryRun: true,
     },

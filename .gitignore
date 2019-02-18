@@ -12,3 +12,4 @@ dist/
 # Test data
 coverage
 .coveralls.yml
+junit_report.xml
