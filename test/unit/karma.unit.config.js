@@ -8,22 +8,23 @@ module.exports = config => {
                 'text-summary': null
             }
         }),
+        titanium: {
+            sdkVersion: '7.5.0.GA'
+        },
         customLaunchers: {
-            // testing on iOS needs TIMOB-26184 and TIMOB-26179, will probably land with 7.5.0
             ios: {
                 base: 'Titanium',
-                browserName: 'iphone',
-                platform: 'ios',
-                sdkVersion: '7.5.0.GA'
+                browserName: 'iPhone Simulator',
+                platform: 'ios'
             },
             android: {
                 base: 'Titanium',
                 browserName: 'Android Emulator',
-                platform: 'android',
-                sdkVersion: '7.4.0.GA'
+                platform: 'android'
             }
         },
-        browsers: ['android'],
+        reporters: base.reporters.concat([ 'mocha' ]),
+        browsers: [ 'android', 'ios' ],
         singleRun: true,
         retryLimit: 0,
         captureTimeout: 300000

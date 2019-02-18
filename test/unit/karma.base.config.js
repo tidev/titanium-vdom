@@ -9,8 +9,9 @@ module.exports = {
         'src/**/!(*.d).ts': ['karma-typescript'],
         'test/unit/**/*.ts': ['karma-typescript']
     },
-    reporters: ['progress', 'karma-typescript'],
+    reporters: ['karma-typescript'],
     karmaTypescriptConfig: {
         tsconfig: './tsconfig.test.json'
-    }
+    },
+    concurrency: 1
 };
