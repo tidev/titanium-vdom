@@ -35,16 +35,14 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
         if (this._titaniumProxy === null) {
             const creationProperties: { [k: string]: any } = {};
             this.attributes.forEach((attributeValue, attributeName) => {
-                creationProperties[attributeName] = attributeValue;
+                creationProperties[camelize(attributeName)] = attributeValue;
             });
-            Ti.API.debug(`Creating proxy for ${this} with options: ${JSON.stringify(creationProperties)}`);
             this._titaniumProxy = this.createProxy(creationProperties);
 
             this.events.forEach((handlers, eventName) => {
                 handlers.forEach(handler => {
                     /* istanbul ignore else */
                     if (this._titaniumProxy) {
-                        Ti.API.debug(`Adding event listener for ${eventName} to created proxy.`);
                         this._titaniumProxy.addEventListener(eventName, handler);
                     }
                 });
@@ -62,12 +60,7 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
         }
 
         const propertyName = camelize(name);
-        /* istanbul ignore else: iOS always returns true for property checks */
-        if (Reflect.has(this.titaniumView, propertyName)) {
-            return (this.titaniumView as any)[propertyName];
-        }
-
-        return this.getElementAttribute(name);
+        return (this.titaniumView as any)[propertyName];
     }
 
     public getElementAttribute(name: string): any {
@@ -76,7 +69,6 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
 
     public setAttribute(name: string, value: any, platformName?: string): void {
         if (platformName && !runs(platformName)) {
-            Ti.API.debug(`Not running on ${platformName}, ignoring attribute ${name}.`);
             return;
         }
 
@@ -87,29 +79,7 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
         }
 
         const propertyName = camelize(name);
-        const setterName = 'set' + capitalizeFirstLetter(propertyName);
-
-        if (Reflect.has(this.titaniumView, propertyName)) {
-            Ti.API.debug(`${this}.setAttribute via property: ${propertyName}(${JSON.stringify(value)})`);
-            (this.titaniumView as any)[propertyName] = value;
-            return;
-        }
-
-        /* istanbul ignore next */
-        if (Reflect.has(this.titaniumView, setterName) && typeof (this.titaniumView as any)[setterName] === 'function') {
-            Ti.API.debug(`${this}.setAttribute via setter: ${setterName}(${JSON.stringify(value)})`);
-            (this.titaniumView as any)[setterName](value);
-            return;
-        }
-
-        Ti.API.warn(`${this.tagName} has no property ${propertyName} or matching setter ${setterName} to set attribute ${name}.`);
-    }
-
-    public hasAttributeAccessor(name: string): boolean {
-        const acessorNames = [name, `set${capitalizeFirstLetter(camelize(name))}`];
-        return acessorNames.some(accessorName => {
-            return Reflect.has(this.titaniumView, accessorName);
-        });
+        (this.titaniumView as any)[propertyName] = value;
     }
 
     /**
@@ -130,11 +100,7 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
             textPropertyCanditates = ['title'];
         }
         for (const textProperty of textPropertyCanditates) {
-            /* istanbul ignore else */
-            if (this.hasAttributeAccessor(textProperty)) {
-                this.setAttribute(textProperty, updatedText);
-                break;
-            }
+            this.setAttribute(textProperty, updatedText);
         }
     }
 

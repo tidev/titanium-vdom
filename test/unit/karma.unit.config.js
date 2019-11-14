@@ -3,15 +3,16 @@ const path = require('path');
 const base = require('./karma.base.config');
 
 module.exports = config => {
-    config.set(Object.assign(base, {
-        karmaTypescriptConfig: Object.assign(base.karmaTypescriptConfig, {
+    config.set(base);
+    config.set({
+        karmaTypescriptConfig: {
             reports: {
                 html: 'coverage',
                 'text-summary': null
             }
-        }),
+        },
         titanium: {
-            sdkVersion: '7.5.0.GA'
+            sdkVersion: '8.2.1.GA'
         },
         customLaunchers: {
             ios: {
@@ -32,6 +33,7 @@ module.exports = config => {
         },
         singleRun: true,
         retryLimit: 0,
-        captureTimeout: 300000
-    }));
+        captureTimeout: 300000,
+        logLevel: config.LOG_DEBUG
+    });
 }
