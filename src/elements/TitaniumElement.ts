@@ -1,7 +1,10 @@
 import { AbstractNode } from '../nodes/AbstractNode';
 import { EventCallback } from '../nodes/ElementNode';
 import { TextNode } from '../nodes/TextNode';
-import { camelize, capitalizeFirstLetter, findSingleVisualElement, runs } from '../utility';
+import { runs } from '../utils/device';
+import { findSingleVisualElement } from '../utils/dom';
+import { isNumeric, toNumber } from '../utils/number';
+import { camelize } from '../utils/string';
 import { AbstractElement } from './AbstractElement';
 import { InvisibleElement } from './InvisibleElement';
 
@@ -35,9 +38,9 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
         if (this._titaniumProxy === null) {
             const creationProperties: { [k: string]: any } = {};
             this.attributes.forEach((attributeValue, attributeName) => {
-                creationProperties[attributeName] = attributeValue;
+                const propertyName = camelize(attributeName);
+                this.setProperty(creationProperties, propertyName, attributeValue);
             });
-            Ti.API.debug(`Creating proxy for ${this} with options: ${JSON.stringify(creationProperties)}`);
             this._titaniumProxy = this.createProxy(creationProperties);
 
             this.events.forEach((handlers, eventName) => {
@@ -265,5 +268,13 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
         }
 
         return null;
+    }
+
+    private setProperty(proxy: any, name: string, value: any) {
+        if (typeof value === 'string' && isNumeric(value)) {
+            proxy[name] = toNumber(value);
+        } else {
+            proxy[name] = value;
+        }
     }
 }

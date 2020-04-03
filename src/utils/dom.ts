@@ -1,24 +1,8 @@
-import { ElementCollection } from './ElementCollection';
-import { AbstractElement } from './elements/AbstractElement';
-import { TitaniumElement } from './elements/TitaniumElement';
+import { ElementCollection } from '../ElementCollection';
+import { TitaniumElement } from '../elements/TitaniumElement';
+import { ElementNode } from '../nodes/ElementNode';
 
-export function camelize(value: string): string {
-    return value.replace(/-(\w)/g, (match, firstSubMatch) => firstSubMatch ? firstSubMatch.toUpperCase() : '');
-}
-
-export function capitalizeFirstLetter(value: string): string {
-    return value.charAt(0).toUpperCase() + value.slice(1);
-}
-
-export function runs(name: string): boolean {
-    if (name === 'ios') {
-        return ['iphone', 'ipad'].indexOf(Ti.Platform.osname) !== -1;
-    }
-
-    return name === Ti.Platform.osname;
-}
-
-export function findSingleVisualElement<T extends Titanium.Proxy>(node: AbstractElement): TitaniumElement<T> {
+export function findSingleVisualElement<T extends Titanium.Proxy>(node: ElementNode): TitaniumElement<T> {
     if (node instanceof TitaniumElement) {
         return node;
     }
@@ -31,6 +15,14 @@ export function findSingleVisualElement<T extends Titanium.Proxy>(node: Abstract
     }
 
     return visualElement;
+}
+
+export function findSingleVisualElementNoThrow<T extends Titanium.Proxy>(node: ElementNode): TitaniumElement<T> | null {
+    try {
+        return findSingleVisualElement(node);
+    } catch (e) {
+        return null;
+    }
 }
 
 function findSingleVisualElementRecursive<T extends Titanium.Proxy>(elements: ElementCollection, nestingLevel: number = 0): TitaniumElement<T> {
