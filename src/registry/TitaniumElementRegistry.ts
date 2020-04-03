@@ -1,9 +1,13 @@
 import { ProxyFactory, ViewMetadata } from '../elements/TitaniumElement';
-import { ElementNamingStrategyInterface } from './ElementNamingStrategyInterface';
+import { camelize } from '../utils/string';
 
 export interface TitaniumViewElementMeta<T extends Titanium.Proxy> {
     resolveFactory: () => ProxyFactory<T>;
     meta: ViewMetadata;
+}
+
+function normalizeTagName(name: string): string {
+    return camelize(name).toLowerCase();
 }
 
 export class TitaniumElementRegistry {
@@ -11,13 +15,10 @@ export class TitaniumElementRegistry {
 
     public defaultViewMetadata: Partial<ViewMetadata> = {};
 
-    public namingStrategy: ElementNamingStrategyInterface;
-
     private elements: Map<string, TitaniumViewElementMeta<any>>;
 
     private constructor() {
         this.elements = new Map();
-        this.namingStrategy = { normalizeName: name => name.toLowerCase() };
     }
 
     public static getInstance(): TitaniumElementRegistry {
@@ -29,9 +30,9 @@ export class TitaniumElementRegistry {
     }
 
     public registerElement<T extends Titanium.Proxy>(tagName: string, resolveFactory: () => ProxyFactory<T>, meta: ViewMetadata): void {
-        const normalizedTagName = this.namingStrategy.normalizeName(tagName);
-        if (!this.elements.has(normalizedTagName)) {
-            this.elements.set(normalizedTagName, {
+        tagName = normalizeTagName(tagName);
+        if (!this.hasElement(tagName)) {
+            this.elements.set(tagName.toLowerCase(), {
                 resolveFactory,
                 meta: Object.assign({}, this.defaultViewMetadata, meta)
             });
@@ -41,32 +42,33 @@ export class TitaniumElementRegistry {
     }
 
     public unregisterElement(tagName: string): void {
+        tagName = normalizeTagName(tagName);
         this.ensureElementIsRegistered(tagName);
         this.elements.delete(tagName);
     }
 
     public getElement<T extends Titanium.Proxy>(tagName: string): TitaniumViewElementMeta<T> {
+        tagName = normalizeTagName(tagName);
         this.ensureElementIsRegistered(tagName);
-        return this.elements.get(tagName.toLowerCase())!;
+        return this.elements.get(tagName)!;
     }
 
     public hasElement(tagName: string): boolean {
-        return this.elements.has(tagName.toLowerCase());
+        tagName = normalizeTagName(tagName);
+        return this.elements.has(tagName);
     }
 
     public getViewFactory<T extends Titanium.Proxy>(tagName: string): ProxyFactory<T> {
         this.ensureElementIsRegistered(tagName);
-        return this.elements.get(tagName.toLowerCase())!.resolveFactory();
+        return this.getElement<T>(tagName).resolveFactory();
     }
 
     public getViewMetadata<T extends Titanium.Proxy>(tagName: string): ViewMetadata {
-        this.ensureElementIsRegistered(tagName);
-        return this.elements.get(tagName.toLowerCase())!.meta;
+        return this.getElement(tagName).meta;
     }
 
     public setViewMetadata<T extends Titanium.Proxy>(tagName: string, meta: ViewMetadata) {
-        this.ensureElementIsRegistered(tagName);
-        this.elements.get(tagName)!.meta = meta;
+        this.getElement(tagName).meta = meta;
     }
 
     private ensureElementIsRegistered(tagName: string): void {
