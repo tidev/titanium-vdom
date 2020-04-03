@@ -47,18 +47,14 @@ export class InvisibleElement extends AbstractElement {
         }
     }
 
-    public setAttribute(name: string, value: any, platformName?: string): void {
-        if (platformName && !runs(platformName)) {
-            return;
-        }
-
+    public setAttribute(name: string, value: any): void {
         super.setAttribute(name, value);
 
         try {
             const visualElement = findSingleVisualElement(this);
-            visualElement.setAttribute(name, value, platformName);
+            visualElement.setAttribute(name, value);
         } catch (e) {
-            // Do nothing of no visual element was found
+            // Do nothing if no visual element was found
         }
     }
 
@@ -111,15 +107,8 @@ export class InvisibleElement extends AbstractElement {
     }
 
     private projectAttributesToVisualElement<T extends Titanium.Proxy>(visualElement: TitaniumElement<T>) {
-        for (const [attributeName, attributeValue] of this.attributes) {
-            let name = attributeName;
-            let platformName;
-            const nameParts = attributeName.split(':');
-            if (nameParts.length === 2) {
-                name = nameParts[1];
-                platformName = nameParts[0];
-            }
-            visualElement.setAttribute(name, attributeValue, platformName);
+        for (const [name, value] of this.attributes) {
+            visualElement.setAttribute(name, value);
         }
     }
 

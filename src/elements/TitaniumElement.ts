@@ -77,12 +77,7 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
         return super.getAttribute(name);
     }
 
-    public setAttribute(name: string, value: any, platformName?: string): void {
-        if (platformName && !runs(platformName)) {
-            Ti.API.debug(`Not running on ${platformName}, ignoring attribute ${name}.`);
-            return;
-        }
-
+    public setAttribute(name: string, value: any): void {
         super.setAttribute(name, value);
 
         if (this.proxyCreated === false) {
@@ -90,29 +85,7 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
         }
 
         const propertyName = camelize(name);
-        const setterName = 'set' + capitalizeFirstLetter(propertyName);
-
-        if (Reflect.has(this.titaniumView, propertyName)) {
-            Ti.API.debug(`${this}.setAttribute via property: ${propertyName}(${JSON.stringify(value)})`);
-            (this.titaniumView as any)[propertyName] = value;
-            return;
-        }
-
-        /* istanbul ignore next */
-        if (Reflect.has(this.titaniumView, setterName) && typeof (this.titaniumView as any)[setterName] === 'function') {
-            Ti.API.debug(`${this}.setAttribute via setter: ${setterName}(${JSON.stringify(value)})`);
-            (this.titaniumView as any)[setterName](value);
-            return;
-        }
-
-        Ti.API.warn(`${this.tagName} has no property ${propertyName} or matching setter ${setterName} to set attribute ${name}.`);
-    }
-
-    public hasAttributeAccessor(name: string): boolean {
-        const acessorNames = [name, `set${capitalizeFirstLetter(camelize(name))}`];
-        return acessorNames.some(accessorName => {
-            return Reflect.has(this.titaniumView, accessorName);
-        });
+        this.setProperty(this.titaniumView, propertyName, value);
     }
 
     /**

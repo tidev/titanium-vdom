@@ -1,4 +1,5 @@
 import { ElementCollection } from '../ElementCollection';
+import { runs } from '../utils/device';
 import { AbstractNode, NodeType } from './AbstractNode';
 import { ChildNodeInterface } from './ChildNodeInterface';
 import { ParentNodeInterface } from './ParentNodeInterface';
@@ -114,6 +115,18 @@ export class ElementNode extends AbstractNode implements ChildNodeInterface, Par
 
     public hasAttribute(name: string): boolean {
         return this.attributes.has(name);
+    }
+
+    public setAttributeNS(namespace: string, name: string, value: any): void {
+        if (runs(namespace)) {
+            this.setAttribute(name, value);
+        }
+    }
+
+    public removeAttributeNS(namespace: string, name: string): void {
+        if (runs(namespace)) {
+            this.removeAttribute(name);
+        }
     }
 
     public getStyle(propertyName: string): any {
