@@ -1,5 +1,7 @@
 import { AbstractNode } from '../nodes/AbstractNode';
-import { findSingleVisualElement, runs } from '../utility';
+import { EventCallback } from '../nodes/ElementNode';
+import { findSingleVisualElement } from '../utils/dom';
+import { camelize } from '../utils/string';
 import { AbstractElement } from './AbstractElement';
 import { TitaniumElement } from './TitaniumElement';
 
@@ -32,9 +34,10 @@ import { TitaniumElement } from './TitaniumElement';
  *      Label 2
  *      Label 3
  *
- * Likewise a similar handling is applied when setting attributes on invisible
- * elements. All attributes will be passed along child elements until a visual
- * element is reached and the attributes will also be applied to that element.
+ * Likewise, a similar handling is applied when setting attributes/events on
+ * invisible elements. All attributes/events will be passed along child
+ * elements until a visual element is reached and the attributes/events will
+ * also be applied to that element.
  */
 export class InvisibleElement extends AbstractElement {
 
@@ -55,6 +58,26 @@ export class InvisibleElement extends AbstractElement {
             visualElement.setAttribute(name, value);
         } catch (e) {
             // Do nothing if no visual element was found
+        }
+    }
+
+    public on(eventName: string, handler: EventCallback) {
+        try {
+            // We do not have event bubbling, so manually delegate the event handler
+            // to the underlying visual element.
+            const visualElement = findSingleVisualElement(this);
+            return visualElement.on(eventName, handler);
+        } catch (e) {
+            return super.on(eventName, handler);
+        }
+    }
+
+    public off(eventName: string, handler: EventCallback) {
+        try {
+            const visualElement = findSingleVisualElement(this);
+            return visualElement.off(eventName, handler);
+        } catch (e) {
+            return super.off(eventName, handler);
         }
     }
 
