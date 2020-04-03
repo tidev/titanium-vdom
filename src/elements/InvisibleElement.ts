@@ -59,11 +59,11 @@ export class InvisibleElement extends AbstractElement {
     }
 
     public isDetached(): boolean {
-        return super.getAttribute('detached') || false;
+        return this.hasAttribute('detached') || false;
     }
 
     public shouldDetachChildren(): boolean {
-        return super.getAttribute('detach-children') || false;
+        return this.hasAttribute('detach-children') || false;
     }
 
     public insertBefore(newChild: AbstractNode, referenceChild: AbstractNode) {
