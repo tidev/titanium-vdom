@@ -17,6 +17,11 @@ export interface ViewMetadata {
     [key: string]: any;
 }
 
+const stringProperties = [
+    'text',
+    'title'
+];
+
 function hasOwnProperty(obj: any, name: string) {
     return Object.prototype.hasOwnProperty.call(obj, name);
 }
@@ -253,7 +258,7 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
     }
 
     private setProperty(proxy: any, name: string, value: any) {
-        if (typeof value === 'string' && isNumeric(value)) {
+        if (typeof value === 'string' && !stringProperties.includes(name) && isNumeric(value)) {
             proxy[name] = toNumber(value);
         } else {
             proxy[name] = value;
