@@ -17,6 +17,10 @@ export interface ViewMetadata {
     [key: string]: any;
 }
 
+function hasOwnProperty(obj: any, name: string) {
+    return Object.prototype.hasOwnProperty.call(obj, name);
+}
+
 export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
 
     public meta: ViewMetadata;
@@ -101,15 +105,14 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
             }
         }
         updatedText = updatedText.replace(/^\s+|\s+$/g, '');
-        let textPropertyCanditates = ['text', 'title'];
-        if (runs('ios') && this.titaniumView.apiName === 'Ti.UI.Button') {
-            textPropertyCanditates = ['title'];
-        }
+        const textPropertyCanditates = ['text', 'title'];
         for (const textProperty of textPropertyCanditates) {
             /* istanbul ignore else */
-            if (this.hasAttributeAccessor(textProperty)) {
-                this.setAttribute(textProperty, updatedText);
+            if (this.proxyCreated && hasOwnProperty(this.titaniumView, textProperty)) {
+                this.setProperty(this._titaniumProxy, textProperty, updatedText);
                 break;
+            } else {
+                this.setAttribute(textProperty, updatedText);
             }
         }
     }
