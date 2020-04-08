@@ -11,7 +11,7 @@ module.exports = config => {
             }
         }),
         titanium: {
-            sdkVersion: '7.5.0.GA'
+            sdkVersion: '9.0.0.GA'
         },
         customLaunchers: {
             ios: {

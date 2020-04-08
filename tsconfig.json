@@ -4,14 +4,8 @@
     "target": "es5",
     "module": "commonjs",
     "lib": [
-      "es2015",
-      "es2015.iterable"
+      "es2016"
     ],
-    "paths": {
-      "vdom/*": [
-        "src/*"
-      ]
-    },
     "outDir": "./dist",
     "declaration": true,
     "downlevelIteration": true,

@@ -5,6 +5,7 @@ describe('TitaniumElementRegistry', () => {
 
     beforeEach(() => {
         registry = TitaniumElementRegistry.getInstance();
+        registry.registerElement('view', () => Ti.UI.createView, { typeName: 'Ti.UI.View' });
     });
 
     afterEach(() => {
@@ -20,70 +21,57 @@ describe('TitaniumElementRegistry', () => {
 
     describe('registerElement', () => {
         it('should register element', () => {
-            registry.registerElement('view', () => Ti.UI.createView, { typeName: 'Ti.UI.View' });
             expect(registry.hasElement('view')).toBeTruthy();
-        });
-
-        it('should use default naming strategy to register element', () => {
-            registry.registerElement('view', () => Ti.UI.createView, { typeName: 'Ti.UI.View' });
-            expect(registry.hasElement('view')).toBeTruthy();
-        });
-
-        it('should use custom naming strategy to register element', () => {
-            registry.namingStrategy = { normalizeName(name: string) { return `_${name}`; } };
-            registry.registerElement('view', () => Ti.UI.createView, { typeName: 'Ti.UI.View' });
-            expect(registry.hasElement('_view')).toBeTruthy();
         });
     });
 
     describe('unregisterElement', () => {
         it('should unregister previously registered element', () => {
-            registry.registerElement('view', () => Ti.UI.createView, { typeName: 'Ti.UI.View' });
             expect(registry.hasElement('view')).toBeTruthy();
             registry.unregisterElement('view');
             expect(registry.hasElement('view')).toBeFalsy();
         });
 
         it('should throw if element not registerd', () => {
-            expect(registry.hasElement('view')).toBeFalsy();
-            expect(() => registry.unregisterElement('view')).toThrow();
+            expect(registry.hasElement('foo')).toBeFalsy();
+            expect(() => registry.unregisterElement('foo')).toThrow();
         });
     });
 
     describe('hasElement', () => {
+        it('should normalize tag name', () => {
+
+        });
+
         it('should find element by tag name', () => {
-            registry.registerElement('view', () => Ti.UI.createView, { typeName: 'Ti.UI.View' });
             expect(registry.hasElement('view')).toBeTruthy();
         });
 
         it('should return false if element not found', () => {
-            registry.registerElement('view', () => Ti.UI.createView, { typeName: 'Ti.UI.View' });
             expect(registry.hasElement('other-view')).toBeFalsy();
         });
     });
 
     describe('getElement', () => {
         it('should get element by tag name', () => {
-            registry.registerElement('view', () => Ti.UI.createView, { typeName: 'Ti.UI.View' });
             const element = registry.getElement('view');
             expect(element).toBeTruthy();
         });
 
         it('should throw if element not found', () => {
-            expect(() => registry.getElement('view')).toThrow();
+            expect(() => registry.getElement('foo')).toThrow();
         });
     });
 
     describe('getViewFactory', () => {
         it('should get view factory function by tag name', () => {
-            registry.registerElement('view', () => Ti.UI.createView, { typeName: 'Ti.UI.View' });
             const createFunction = registry.getViewFactory('view');
             expect(createFunction).toBeTruthy();
             expect(createFunction).toEqual(jasmine.any(Function));
         });
 
         it('should throw if element not found', () => {
-            expect(() => registry.getElement('view')).toThrow();
+            expect(() => registry.getViewFactory('foo')).toThrow();
         });
     });
 
@@ -93,14 +81,14 @@ describe('TitaniumElementRegistry', () => {
                 typeName: 'Ti.UI.View',
                 some: 'data'
             };
-            registry.registerElement('view', () => Ti.UI.createView, expectedMetadata);
-            const actualMetadata = registry.getViewMetadata('view');
+            registry.registerElement('the-view', () => Ti.UI.createView, expectedMetadata);
+            const actualMetadata = registry.getViewMetadata('the-view');
             expect(actualMetadata).toBeTruthy();
             expect(actualMetadata).toEqual(expectedMetadata);
         });
 
         it('should throw if element not found', () => {
-            expect(() => registry.getElement('view')).toThrow();
+            expect(() => registry.getViewMetadata('foo')).toThrow();
         });
     });
 
@@ -110,7 +98,6 @@ describe('TitaniumElementRegistry', () => {
                 typeName: 'Ti.UI.View',
                 some: 'data'
             };
-            registry.registerElement('view', () => Ti.UI.createView, { typeName: 'Ti.UI.View' });
             registry.setViewMetadata('view', expectedMetadata);
             const actualMetadata = registry.getViewMetadata('view');
             expect(actualMetadata).toBeTruthy();
@@ -118,7 +105,7 @@ describe('TitaniumElementRegistry', () => {
         });
 
         it('should throw if element not found', () => {
-            expect(() => registry.getElement('view')).toThrow();
+            expect(() => registry.setViewMetadata('foo', { typeName: 'Ti.UI.View' })).toThrow();
         });
     });
 });

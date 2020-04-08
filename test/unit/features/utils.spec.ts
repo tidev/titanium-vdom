@@ -1,5 +1,7 @@
 import { InvisibleElement } from 'vdom/index';
-import { camelize, capitalizeFirstLetter, findSingleVisualElement, runs } from 'vdom/utility';
+import { runs } from 'vdom/utils/device';
+import { findSingleVisualElement } from 'vdom/utils/dom';
+import { camelize, capitalizeFirstLetter } from'vdom/utils/string';
 
 import { createElement } from '../helpers';
 

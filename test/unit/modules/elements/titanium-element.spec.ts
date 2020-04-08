@@ -50,14 +50,16 @@ describe('TitaniumElement', () => {
             expect(element.getAttribute('top')).toEqual(topValue);
             expect(view.top).toEqual(topValue);
         });
+    });
 
+    describe('setAttributeNS', () => {
         it('should set namespaced attribute only on running platform', () => {
-            element.setAttribute('top', topValue, Ti.Platform.osname);
+            element.setAttributeNS(Ti.Platform.osname, 'top', topValue);
             expect(element.getAttribute('top')).toEqual(topValue);
             expect(element.titaniumView.top).toEqual(topValue);
 
             element = createElement('View');
-            element.setAttribute('top', topValue, 'non-existing-platform');
+            element.setAttributeNS('non-existing-platform', 'top', topValue);
             expect(element.getAttribute('top')).toBeUndefined();
         });
     });

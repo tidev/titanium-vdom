@@ -40,14 +40,17 @@ describe('element registration', () => {
     ];
     const platformElements: { [k: string]: string[] } = {
         android: [
-            'CardView'
+            'CardView',
+            'DrawerLayout',
+            'ProgressIndicator',
+            'SearchView'
         ],
         ios: [
             'BlurView',
             'DashboardView',
             'DashboardItem',
-            'NavigationWindow',
-            'TabbedBar'
+            'LivePhotoView',
+            'Stepper'
         ]
     };
 

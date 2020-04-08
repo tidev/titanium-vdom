@@ -62,7 +62,7 @@ describe('InvisbleElement', () => {
 
     /**
      * This will test the following nested view structure:
-     * 
+     *
      *  <View>
      *      <Label text="1">
      *      <InvisibleElement>
@@ -74,16 +74,16 @@ describe('InvisbleElement', () => {
      *      </invisibleElement>
      *      <Label text="5">
      *  </View>
-     * 
+     *
      * which should result in the following view hierarchy:
-     * 
+     *
      *  View
      *      Label 1
      *      Label 2
      *      Label 3
      *      Label 4
      *      Label 5
-     *  
+     *
      */
     it('should insert nested visual and invisble childs to parent', () => {
         const nestedProxyElement = new InvisibleElement('NestedProxy');
