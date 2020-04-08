@@ -1,5 +1,6 @@
 export function isNumeric(value: any) {
-  return !isNaN(value);
+  value = '' + value;
+  return !isNaN(value) && !isNaN(parseFloat(value));
 }
 
 export function toNumber(value: any) {
