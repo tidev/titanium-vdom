@@ -59,6 +59,7 @@ export class TitaniumElementRegistry {
     }
 
     public getViewFactory<T extends Titanium.Proxy>(tagName: string): ProxyFactory<T> {
+        tagName = normalizeTagName(tagName);
         this.ensureElementIsRegistered(tagName);
         return this.getElement<T>(tagName).resolveFactory();
     }
