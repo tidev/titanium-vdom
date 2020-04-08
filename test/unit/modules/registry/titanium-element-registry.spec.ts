@@ -6,6 +6,7 @@ describe('TitaniumElementRegistry', () => {
     beforeEach(() => {
         registry = TitaniumElementRegistry.getInstance();
         registry.registerElement('view', () => Ti.UI.createView, { typeName: 'Ti.UI.View' });
+        registry.registerElement('list-view', () => Ti.UI.createView, { typeName: 'Ti.UI.ListView' });
     });
 
     afterEach(() => {
@@ -39,12 +40,13 @@ describe('TitaniumElementRegistry', () => {
     });
 
     describe('hasElement', () => {
-        it('should normalize tag name', () => {
-
-        });
-
         it('should find element by tag name', () => {
             expect(registry.hasElement('view')).toBeTruthy();
+        });
+
+        it('should normalize tag name', () => {
+            expect(registry.hasElement('ListView')).toBeTrue();
+            expect(registry.hasElement('list-view')).toBeTrue();
         });
 
         it('should return false if element not found', () => {
@@ -58,6 +60,11 @@ describe('TitaniumElementRegistry', () => {
             expect(element).toBeTruthy();
         });
 
+        it('should normalize tag name', () => {
+            expect(registry.getElement('ListView')).toBeTruthy();
+            expect(registry.getElement('list-view')).toBeTruthy();
+        });
+
         it('should throw if element not found', () => {
             expect(() => registry.getElement('foo')).toThrow();
         });
@@ -68,6 +75,11 @@ describe('TitaniumElementRegistry', () => {
             const createFunction = registry.getViewFactory('view');
             expect(createFunction).toBeTruthy();
             expect(createFunction).toEqual(jasmine.any(Function));
+        });
+
+        it('should normalize tag name', () => {
+            expect(registry.getViewFactory('ListView')).toBeTruthy();
+            expect(registry.getViewFactory('list-view')).toBeTruthy();
         });
 
         it('should throw if element not found', () => {
@@ -85,6 +97,11 @@ describe('TitaniumElementRegistry', () => {
             const actualMetadata = registry.getViewMetadata('the-view');
             expect(actualMetadata).toBeTruthy();
             expect(actualMetadata).toEqual(expectedMetadata);
+        });
+
+        it('should normalize tag name', () => {
+            expect(registry.getViewMetadata('ListView')).toBeTruthy();
+            expect(registry.getViewMetadata('list-view')).toBeTruthy();
         });
 
         it('should throw if element not found', () => {
