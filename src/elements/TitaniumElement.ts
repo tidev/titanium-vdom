@@ -192,13 +192,14 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
         }
 
         const parentView = this.titaniumView;
-        const childView = element.titaniumView;
-
-        /* istanbul ignore if: mainly For type checking only, probably all views have add methods */
+        /* istanbul ignore if: mainly for type checking only, probably all views have add methods */
         if (!this.isContainerView(parentView)) {
             throw new Error(`Unable to automatically add children to ${this}. Consider wrapping it in a custom component to manually handle children and make it a detached element.`);
         }
 
+        // just assume we have a Ti.UI.View here, add/insertAt will do the actual
+        // validation on the native side.
+        const childView = element.titaniumView as unknown as Titanium.UI.View;
         if (atIndex === null || atIndex === undefined) {
             parentView.add(childView);
         } else {
@@ -233,7 +234,12 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
             return null;
         }
 
-        const visualElement = findSingleVisualElement(element);
+        let visualElement;
+        try {
+            visualElement = findSingleVisualElement(element);
+        } catch (e) {
+            return null;
+        }
         const childTitaniumView = visualElement.titaniumView as Titanium.UI.View;
         if (!this.isContainerView(this.titaniumView)) {
             throw new Error(`Unable to determine Titanium child view index for ${visualElement}. Parent ${this} is no container view.`);
