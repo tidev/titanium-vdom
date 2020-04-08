@@ -7,8 +7,8 @@ export function registerCommonTitaniumElements(registry: TitaniumElementRegistry
     registry.registerElement('ButtonBar', () => Ti.UI.createButtonBar, { typeName: 'Ti.UI.ButtonBar' });
     registry.registerElement('ImageView', () => Ti.UI.createImageView, { typeName: 'Ti.UI.ImageView' });
     registry.registerElement('Label', () => Ti.UI.createLabel, { typeName: 'Ti.UI.Label' });
-    registry.registerElement('ListView', () => Ti.UI.createListView, { detached: true, typeName: 'Ti.UI.ListView' });
-    registry.registerElement('ListSection', () => Ti.UI.createListSection, { detached: true, typeName: 'Ti.UI.ListSection' });
+    registry.registerElement('ListView', () => Ti.UI.createListView, { detached: true, detachChildren: true, typeName: 'Ti.UI.ListView' });
+    registry.registerElement('ListSection', () => Ti.UI.createListSection, { typeName: 'Ti.UI.ListSection' });
     registry.registerElement('MaskedImage', () => Ti.UI.createMaskedImage, { typeName: 'Ti.UI.MaskedImage' });
     registry.registerElement('OptionDialog', () => Ti.UI.createOptionDialog, { typeName: 'Ti.UI.OptionDialog' });
     registry.registerElement('Picker', () => Ti.UI.createPicker, { typeName: 'Ti.UI.Picker' });
@@ -22,9 +22,9 @@ export function registerCommonTitaniumElements(registry: TitaniumElementRegistry
     registry.registerElement('Slider', () => Ti.UI.createSlider, { typeName: 'Ti.UI.Slider' });
     registry.registerElement('Switch', () => Ti.UI.createSwitch, { typeName: 'Ti.UI.Switch' });
     registry.registerElement('Tab', () => Ti.UI.createTab, { detached: true, typeName: 'Ti.UI.Tab' });
-    registry.registerElement('TableView', () => Ti.UI.createTableView, { detached: true, typeName: 'Ti.UI.TableView' });
-    registry.registerElement('TableViewRow', () => Ti.UI.createTableViewRow, { detached: true, typeName: 'Ti.UI.TableViewRow' });
-    registry.registerElement('TableViewSection', () => Ti.UI.createTableViewSection, { detached: true, typeName: 'Ti.UI.TableViewSection' });
+    registry.registerElement('TableView', () => Ti.UI.createTableView, { detached: true, detachChildren: true, typeName: 'Ti.UI.TableView' });
+    registry.registerElement('TableViewRow', () => Ti.UI.createTableViewRow, { typeName: 'Ti.UI.TableViewRow' });
+    registry.registerElement('TableViewSection', () => Ti.UI.createTableViewSection, { typeName: 'Ti.UI.TableViewSection' });
     registry.registerElement('TabbedBar', () => Ti.UI.createTabbedBar, { typeName: 'Ti.UI.TabbedBar' });
     registry.registerElement('TabGroup', () => Ti.UI.createTabGroup, { detached: true, typeName: 'Ti.UI.TabGroup' });
     registry.registerElement('TextArea', () => Ti.UI.createTextArea, { typeName: 'Ti.UI.TextArea' });
