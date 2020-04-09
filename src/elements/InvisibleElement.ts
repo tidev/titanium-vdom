@@ -109,7 +109,7 @@ export class InvisibleElement extends AbstractElement {
         }
 
         if (this.firstElementChild === newChild && newChild instanceof TitaniumElement) {
-            this.projectAttributesToVisualElement(newChild);
+            this.projectToVisualElement(newChild);
         }
     }
 
@@ -129,9 +129,14 @@ export class InvisibleElement extends AbstractElement {
         parent.insertIntoVisualTree(child, baseIndex + insideIndex);
     }
 
-    private projectAttributesToVisualElement<T extends Titanium.Proxy>(visualElement: TitaniumElement<T>) {
+    private projectToVisualElement<T extends Titanium.Proxy>(visualElement: TitaniumElement<T>) {
         for (const [name, value] of this.attributes) {
             visualElement.setAttribute(name, value);
+        }
+        for (const [eventName, handlers] of this.events) {
+            for (const handler of handlers) {
+                visualElement.on(eventName, handler);
+            }
         }
     }
 

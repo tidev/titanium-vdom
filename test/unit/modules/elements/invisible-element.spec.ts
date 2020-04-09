@@ -50,6 +50,16 @@ describe('InvisbleElement', () => {
         expect(viewElement.getAttribute('color')).toEqual(colorValue);
     });
 
+    it('should project event listeners to first visual child', () => {
+        const spy = jasmine.createSpy();
+        const viewElement = createElement('Button');
+        proxyElement.on('click', spy);
+        proxyElement.appendChild(viewElement);
+        viewElement.titaniumView.fireEvent('click');
+
+        expect(spy).toHaveBeenCalled();
+    });
+
     it('should insert visual child after being added to parent', () => {
         const viewElement = createElement('Label');
         proxyElement.appendChild(viewElement);
