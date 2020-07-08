@@ -1,7 +1,6 @@
 import { AbstractNode } from '../nodes/AbstractNode';
 import { EventCallback } from '../nodes/ElementNode';
 import { TextNode } from '../nodes/TextNode';
-import { runs } from '../utils/device';
 import { findSingleVisualElement } from '../utils/dom';
 import { isNumeric, toNumber } from '../utils/number';
 import { camelize } from '../utils/string';
@@ -20,6 +19,10 @@ export interface ViewMetadata {
 const stringProperties = [
     'text',
     'title'
+];
+
+const insertAtBlacklist = [
+    'Ti.UI.TableViewRow'
 ];
 
 function hasOwnProperty(obj: any, name: string) {
@@ -205,7 +208,7 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
         // just assume we have a Ti.UI.View here, add/insertAt will do the actual
         // validation on the native side.
         const childView = element.titaniumView as unknown as Titanium.UI.View;
-        if (atIndex === null || atIndex === undefined) {
+        if (atIndex === null || atIndex === undefined || insertAtBlacklist.includes(parentView.apiName)) {
             parentView.add(childView);
         } else {
             parentView.insertAt({
