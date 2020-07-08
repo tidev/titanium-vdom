@@ -2,17 +2,17 @@ import { TitaniumElementRegistry } from './TitaniumElementRegistry';
 
 export function registerCommonTitaniumElements(registry: TitaniumElementRegistry) {
     registry.registerElement('ActivityIndicator', () => Ti.UI.createActivityIndicator, { typeName: 'Ti.UI.ActivityIndicator' });
-    registry.registerElement('AlertDialog', () => Ti.UI.createAlertDialog, { typeName: 'Ti.UI.AlertDialog' });
+    registry.registerElement('AlertDialog', () => Ti.UI.createAlertDialog, { detached: true, typeName: 'Ti.UI.AlertDialog' });
     registry.registerElement('Button', () => Ti.UI.createButton, { typeName: 'Ti.UI.Button' });
     registry.registerElement('ImageView', () => Ti.UI.createImageView, { typeName: 'Ti.UI.ImageView' });
     registry.registerElement('Label', () => Ti.UI.createLabel, { typeName: 'Ti.UI.Label' });
     registry.registerElement('ListView', () => Ti.UI.createListView, { detached: true, detachChildren: true, typeName: 'Ti.UI.ListView' });
     registry.registerElement('ListSection', () => Ti.UI.createListSection, { typeName: 'Ti.UI.ListSection' });
     registry.registerElement('MaskedImage', () => Ti.UI.createMaskedImage, { typeName: 'Ti.UI.MaskedImage' });
-    registry.registerElement('OptionDialog', () => Ti.UI.createOptionDialog, { typeName: 'Ti.UI.OptionDialog' });
-    registry.registerElement('Picker', () => Ti.UI.createPicker, { typeName: 'Ti.UI.Picker' });
-    registry.registerElement('PickerColumn', () => Ti.UI.createPickerColumn, { detached: true, typeName: 'Ti.UI.PickerColumn' });
-    registry.registerElement('PickerRow', () => Ti.UI.createPickerRow, { detached: true, typeName: 'Ti.UI.PickerRow' });
+    registry.registerElement('OptionDialog', () => Ti.UI.createOptionDialog, { detached: true, typeName: 'Ti.UI.OptionDialog' });
+    registry.registerElement('Picker', () => Ti.UI.createPicker, { detachChildren: true, typeName: 'Ti.UI.Picker' });
+    registry.registerElement('PickerColumn', () => Ti.UI.createPickerColumn, { typeName: 'Ti.UI.PickerColumn' });
+    registry.registerElement('PickerRow', () => Ti.UI.createPickerRow, { typeName: 'Ti.UI.PickerRow' });
     registry.registerElement('ProgressBar', () => Ti.UI.createProgressBar, { typeName: 'Ti.UI.ProgressBar' });
     registry.registerElement('RefreshControl', () => Ti.UI.createRefreshControl, { detached: true, typeName: 'Ti.UI.RefreshControl' });
     registry.registerElement('ScrollableView', () => Ti.UI.createScrollableView, { detachChildren: true, typeName: 'Ti.UI.ScrollableView' });
