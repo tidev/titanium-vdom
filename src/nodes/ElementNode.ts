@@ -40,7 +40,8 @@ export class ElementNode extends AbstractNode implements ChildNodeInterface, Par
     }
 
     get outerHTML(): string {
-        return `<${this.tagName}></${this.tagName}>`;
+        const tagName = this.tagName.toLowerCase();
+        return `<${tagName}></${tagName}>`;
     }
 
     get childElementCount() {
