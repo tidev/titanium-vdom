@@ -165,4 +165,10 @@ describe('InvisbleElement', () => {
         proxyElement.appendChild(viewElement);
         expect(rootElement.titaniumView.children.length).toEqual(0);
     });
+
+    it('should retrieve first visual child', () => {
+        const viewElement = createElement('View');
+        proxyElement.appendChild(viewElement);
+        expect(proxyElement.firstVisualChild).toBe(viewElement);
+    });
 });

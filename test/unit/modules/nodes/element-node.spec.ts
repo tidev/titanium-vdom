@@ -17,9 +17,9 @@ describe('ElementNode', () => {
 
     describe('outerHTML', () => {
         it('should return tag string', () => {
-            const tagName = 'Test';
-            node.tagName = tagName;
-            expect(node.outerHTML).toEqual(`<${tagName}></${tagName}>`);
+            const tagName = 'test';
+            const el = new ElementNode(tagName);
+            expect(el.outerHTML).toEqual(`<${tagName}></${tagName}>`);
         });
     });
 

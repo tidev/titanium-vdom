@@ -7,8 +7,8 @@ describe('EmulatedRootElement', () => {
         rootElement = new EmulatedRootElement();
     });
 
-    it('should have "Root" tag name', () => {
-        expect(rootElement.tagName).toEqual('Root');
+    it('should have "ROOT" tag name', () => {
+        expect(rootElement.tagName).toEqual('ROOT');
     });
 
     it('should have no child nodes', () => {

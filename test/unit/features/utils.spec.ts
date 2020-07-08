@@ -1,6 +1,7 @@
 import { InvisibleElement } from 'vdom/index';
 import { runs } from 'vdom/utils/device';
 import { findSingleVisualElement } from 'vdom/utils/dom';
+import { isNumeric, toNumber } from 'vdom/utils/number';
 import { camelize, capitalizeFirstLetter } from 'vdom/utils/string';
 
 import { createElement } from '../helpers';
@@ -56,6 +57,29 @@ describe('utility', () => {
             const foundVisualElement = findSingleVisualElement(proxyElement);
 
             expect(foundVisualElement).toBeTruthy();
+        });
+    });
+
+    describe('isNumeric', () => {
+        it('should detect numeric value', () => {
+            expect(isNumeric(1)).toBeTrue();
+            expect(isNumeric(3.13)).toBeTrue();
+            expect(isNumeric(-9.81)).toBeTrue();
+            expect(isNumeric('test')).toBeFalse();
+            expect(isNumeric('90foo')).toBeFalse();
+            expect(isNumeric('bar13.37')).toBeFalse();
+        });
+    });
+
+    describe('toNumber', () => {
+        it('should convert integer', () => {
+            expect(toNumber('13')).toBe(13);
+            expect(toNumber(1989)).toBe(1989);
+        });
+
+        it('should convert float', () => {
+            expect(toNumber('33.3')).toBe(33.3);
+            expect(toNumber(12.03)).toBe(12.03);
         });
     });
 });
