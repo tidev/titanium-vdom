@@ -1,6 +1,6 @@
 import { AbstractNode } from '../nodes/AbstractNode';
 import { EventCallback } from '../nodes/ElementNode';
-import { findSingleVisualElement } from '../utils/dom';
+import { findSingleVisualElement, findSingleVisualElementNoThrow } from '../utils/dom';
 import { camelize } from '../utils/string';
 import { AbstractElement } from './AbstractElement';
 import { TitaniumElement } from './TitaniumElement';
@@ -40,6 +40,10 @@ import { TitaniumElement } from './TitaniumElement';
  * also be applied to that element.
  */
 export class InvisibleElement extends AbstractElement {
+
+    get firstVisualChild() {
+        return findSingleVisualElementNoThrow(this);
+    }
 
     public getAttribute(name: string): any {
         try {
