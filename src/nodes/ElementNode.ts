@@ -27,7 +27,7 @@ export class ElementNode extends AbstractNode implements ChildNodeInterface, Par
     constructor(tagName: string) {
         super();
 
-        this.nodeName = this.tagName = tagName;
+        this.nodeName = this.tagName = tagName.toUpperCase();
         this.nodeType = NodeType.Element;
 
         this.attributes = new Map<string, any>();
