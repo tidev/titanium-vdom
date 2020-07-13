@@ -104,12 +104,6 @@ export class InvisibleElement extends AbstractElement {
         /* istanbul ignore else */
         if (!(this.isDetached() || this.shouldDetachChildren())) {
             this.insertIntoVisualTree(newChild);
-
-            for (const child of newChild.children) {
-                if (child instanceof AbstractElement) {
-                    newChild.insertIntoVisualTree(child);
-                }
-            }
         }
 
         if (this.firstElementChild === newChild && newChild instanceof TitaniumElement) {

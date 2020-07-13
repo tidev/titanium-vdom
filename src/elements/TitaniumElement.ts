@@ -147,22 +147,29 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
 
         if (newNode instanceof InvisibleElement) {
             const atIndex = this.getTitaniumChildIndexFromNode(referenceNode);
-            this.insertIntoVisualTree(newNode, atIndex ? atIndex : 0);
+            this.insertIntoVisualTree(newNode, atIndex !== null ? atIndex : this.childElementCount);
         }
     }
 
-    public insertIntoVisualTree(child: AbstractElement, atIndex?: number) {
+    public insertIntoVisualTree(child: AbstractElement, atIndex?: number): number {
         if (child.isDetached() || this.shouldDetachChildren()) {
-            return;
+            return 0;
         }
 
         if (child instanceof TitaniumElement) {
             this.insertChild(child, atIndex);
+            return 1;
         } else if (child instanceof InvisibleElement) {
+            const baseIndex = atIndex !== undefined ? atIndex : this.childElementCount;
+            let insideIndex = 0;
+            let numInserted = 0;
             for (const childNode of child.children) {
-                this.insertIntoVisualTree(childNode as AbstractElement);
+                numInserted += this.insertIntoVisualTree(childNode as AbstractElement, baseIndex + insideIndex++);
             }
+            return numInserted;
         }
+
+        return 0;
     }
 
     public removeChild(oldChild: AbstractNode): void {
