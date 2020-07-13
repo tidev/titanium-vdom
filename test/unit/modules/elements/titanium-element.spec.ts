@@ -147,7 +147,7 @@ describe('TitaniumElement', () => {
         it('should lazily bind event listener', () => {
             const spy = jasmine.createSpy('clickEventHander');
             element.on('click', spy);
-            element.titaniumView.fireEvent('click', null);
+            element.titaniumView.fireEvent('click');
 
             expect(spy).toHaveBeenCalled();
         });
@@ -156,7 +156,7 @@ describe('TitaniumElement', () => {
             const spy = jasmine.createSpy('clickEventHander');
             const view = element.titaniumView;
             element.on('click', spy);
-            view.fireEvent('click', null);
+            view.fireEvent('click');
 
             expect(spy).toHaveBeenCalled();
         });
@@ -167,7 +167,7 @@ describe('TitaniumElement', () => {
             element.on('click', spy1);
             const spy2 = jasmine.createSpy('clickEventHander2');
             element.on('click', spy2);
-            view.fireEvent('click', null);
+            view.fireEvent('click');
 
             expect(spy1).toHaveBeenCalled();
             expect(spy2).toHaveBeenCalled();
@@ -182,7 +182,7 @@ describe('TitaniumElement', () => {
             const spy2 = jasmine.createSpy('clickEventHander2');
             element.on('click', spy2);
             element.off('click', spy2);
-            view.fireEvent('click', null);
+            view.fireEvent('click');
 
             expect(spy1).toHaveBeenCalled();
             expect(spy2).not.toHaveBeenCalled();
@@ -198,7 +198,7 @@ describe('TitaniumElement', () => {
             const spy = jasmine.createSpy('clickEventHander');
             element.on('click', spy);
             element.off('click', spy);
-            element.titaniumView.fireEvent('click', null);
+            element.titaniumView.fireEvent('click');
 
             expect(spy).not.toHaveBeenCalled();
         });
