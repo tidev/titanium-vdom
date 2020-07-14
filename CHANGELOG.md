@@ -1,3 +1,11 @@
+## [0.4.1](https://github.com/appcelerator/titanium-vdom/compare/0.4.0...0.4.1) (2020-07-14)
+
+
+### Bug Fixes
+
+* maintain element order when inserting into visual tree ([3f16105](https://github.com/appcelerator/titanium-vdom/commit/3f161054939d6abfd6552d7e66bae4d0c5ccd584))
+
+
 # [0.4.0](https://github.com/appcelerator/titanium-vdom/compare/0.3.2...0.4.0) (2020-07-08)
 
 
