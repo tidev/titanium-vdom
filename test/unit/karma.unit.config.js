@@ -19,6 +19,6 @@ module.exports = config => {
         },
         singleRun: true,
         retryLimit: 0,
-        captureTimeout: 300000
+        captureTimeout: 600000
     }));
 }
