@@ -13,19 +13,6 @@ module.exports = config => {
         titanium: {
             sdkVersion: '9.0.0.GA'
         },
-        customLaunchers: {
-            ios: {
-                base: 'Titanium',
-                browserName: 'iPhone Simulator',
-                platform: 'ios'
-            },
-            android: {
-                base: 'Titanium',
-                browserName: 'Android Emulator',
-                platform: 'android'
-            }
-        },
-        browsers: [ 'android', 'ios' ],
         reporters: base.reporters.concat([ 'mocha', 'junit' ]),
         junitReporter: {
             outputFile: path.resolve(__dirname, '..', '..', 'junit_report.xml')

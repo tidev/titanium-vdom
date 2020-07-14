@@ -5,12 +5,14 @@ const devConfig = Object.assign(base, {
     helpfulReporter: {
         clearScreenBeforeEveryRun: true,
     },
-    autoWatch: true
+    autoWatch: true,
+    browsers: [ 'ios' ],
 });
 devConfig.karmaTypescriptConfig.reports = {
     'text-summary': null
 }
 
 module.exports = config => {
+    devConfig.logLevel = config.LOG_DEBUG;
     config.set(devConfig);
 }
