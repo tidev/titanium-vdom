@@ -9,6 +9,7 @@ export function registerCommonTitaniumElements(registry: TitaniumElementRegistry
     registry.registerElement('ListView', () => Ti.UI.createListView, { detached: true, detachChildren: true, typeName: 'Ti.UI.ListView' });
     registry.registerElement('ListSection', () => Ti.UI.createListSection, { typeName: 'Ti.UI.ListSection' });
     registry.registerElement('MaskedImage', () => Ti.UI.createMaskedImage, { typeName: 'Ti.UI.MaskedImage' });
+    registry.registerElement('NavigationWindow', () => Ti.UI.createNavigationWindow, { typeName: 'Ti.UI.NavigationWindow' });
     registry.registerElement('OptionDialog', () => Ti.UI.createOptionDialog, { detached: true, typeName: 'Ti.UI.OptionDialog' });
     registry.registerElement('Picker', () => Ti.UI.createPicker, { detachChildren: true, typeName: 'Ti.UI.Picker' });
     registry.registerElement('PickerColumn', () => Ti.UI.createPickerColumn, { typeName: 'Ti.UI.PickerColumn' });
