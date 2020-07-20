@@ -1,3 +1,11 @@
+## [0.4.2](https://github.com/appcelerator/titanium-vdom/compare/0.4.1...0.4.2) (2020-07-20)
+
+
+### Bug Fixes
+
+* add missing NavigationWindow element ([#49](https://github.com/appcelerator/titanium-vdom/issues/49)) ([2c31d75](https://github.com/appcelerator/titanium-vdom/commit/2c31d75e294d642ecdad377447a55f0eecd45269))
+
+
 ## [0.4.1](https://github.com/appcelerator/titanium-vdom/compare/0.4.0...0.4.1) (2020-07-14)
 
 
