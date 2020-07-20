@@ -19,7 +19,6 @@ module.exports = config => {
         },
         singleRun: true,
         retryLimit: 0,
-        captureTimeout: 600000,
-        logLevel: config.LOG_DEBUG
+        captureTimeout: 600000
     }));
 }
