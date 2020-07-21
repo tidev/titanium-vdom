@@ -3,9 +3,18 @@ import { NavigationWindowElement } from 'vdom/index';
 import { createElement } from '../../helpers';
 
 describe('NavigationWindow', () => {
+  let nav!: NavigationWindowElement | null;
+
+  beforeEach(() => {
+    nav = new NavigationWindowElement();
+  });
+
+  afterEach(() => {
+    nav = null;
+  });
+
   describe('constructor', () => {
     it('should configure element', () => {
-      const nav = new NavigationWindowElement();
       expect(nav.tagName).toBe('NAVIGATION-WINDOW');
       expect(nav.meta).toEqual({
         typeName: 'Ti.UI.NavigationWindow',
@@ -15,11 +24,16 @@ describe('NavigationWindow', () => {
   });
 
   describe('insertChild', () => {
-    it('should set window attribute', () => {
-      const nav = new NavigationWindowElement();
+    it('should set root window', () => {
       const window = createElement('Window');
       nav.appendChild(window);
-      expect(nav.getAttribute('window')).toBe(window.titaniumView);
+      expect(nav.titaniumView.window).toBe(window.titaniumView);
+    });
+
+    it('should ignore elements other than window', () => {
+      const window = createElement('View');
+      nav.appendChild(window);
+      expect(nav.titaniumView.window).toBeUndefined();
     });
   });
 });

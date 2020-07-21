@@ -1,4 +1,4 @@
-import { TitaniumElement, ViewMetadata } from './TitaniumElement';
+import { TitaniumElement } from './TitaniumElement';
 
 export class NavigationWindowElement extends TitaniumElement<Ti.UI.NavigationWindow> {
   constructor() {
