@@ -1,4 +1,4 @@
-import { NavigationWindowElement } from 'vdom/index';
+import { NavigationWindowElement, TitaniumElement } from 'vdom/index';
 
 import { createElement } from '../../helpers';
 
@@ -25,14 +25,17 @@ describe('NavigationWindow', () => {
 
   describe('insertChild', () => {
     it('should set root window', () => {
-      const window = createElement('Window');
+      const window = new TitaniumElement('window', Ti.UI.createWindow, {
+        typeName: 'Ti.UI.Window',
+        detached: true
+      });
       nav.appendChild(window);
       expect(nav.titaniumView.window).toBe(window.titaniumView);
     });
 
     it('should ignore elements other than window', () => {
-      const window = createElement('View');
-      nav.appendChild(window);
+      const view = createElement('View');
+      nav.appendChild(view);
       expect(nav.titaniumView.window).toBeUndefined();
     });
   });
