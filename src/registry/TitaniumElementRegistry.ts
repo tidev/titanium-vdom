@@ -1,9 +1,20 @@
-import { ProxyFactory, ViewMetadata } from '../elements/TitaniumElement';
+import {
+    ProxyFactory,
+    TitaniumElementConstructor,
+    ViewMetadata
+} from '../elements/TitaniumElement';
 import { camelize } from '../utils/string';
 
+export type ProxyFactoryResolver<T extends Titanium.Proxy> = () => ProxyFactory<T>;
+
 export interface TitaniumViewElementMeta<T extends Titanium.Proxy> {
-    resolveFactory: () => ProxyFactory<T>;
+    resolveFactory: ProxyFactoryResolver<T>;
     meta: ViewMetadata;
+    elementClass?: TitaniumElementConstructor<T>;
+}
+
+interface ElementOptions<T extends Titanium.Proxy> extends TitaniumViewElementMeta<T> {
+    tagName: string;
 }
 
 function normalizeTagName(name: string): string {
@@ -29,8 +40,9 @@ export class TitaniumElementRegistry {
         return this._instance;
     }
 
-    public registerElement<T extends Titanium.Proxy>(tagName: string, resolveFactory: () => ProxyFactory<T>, meta: ViewMetadata): void {
-        tagName = normalizeTagName(tagName);
+    public registerElement<T extends Titanium.Proxy>(options: ElementOptions<T>): void {
+        const { meta, resolveFactory } = options;
+        const tagName = normalizeTagName(options.tagName);
         if (!this.hasElement(tagName)) {
             this.elements.set(tagName.toLowerCase(), {
                 resolveFactory,
@@ -64,11 +76,11 @@ export class TitaniumElementRegistry {
         return this.getElement<T>(tagName).resolveFactory();
     }
 
-    public getViewMetadata<T extends Titanium.Proxy>(tagName: string): ViewMetadata {
+    public getViewMetadata(tagName: string): ViewMetadata {
         return this.getElement(tagName).meta;
     }
 
-    public setViewMetadata<T extends Titanium.Proxy>(tagName: string, meta: ViewMetadata) {
+    public setViewMetadata(tagName: string, meta: ViewMetadata) {
         this.getElement(tagName).meta = meta;
     }
 

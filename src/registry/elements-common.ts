@@ -1,36 +1,245 @@
+import { NavigationWindowElement } from '../elements/NavigationWindowElement';
 import { TitaniumElementRegistry } from './TitaniumElementRegistry';
 
 export function registerCommonTitaniumElements(registry: TitaniumElementRegistry) {
-    registry.registerElement('ActivityIndicator', () => Ti.UI.createActivityIndicator, { typeName: 'Ti.UI.ActivityIndicator' });
-    registry.registerElement('AlertDialog', () => Ti.UI.createAlertDialog, { detached: true, typeName: 'Ti.UI.AlertDialog' });
-    registry.registerElement('Button', () => Ti.UI.createButton, { typeName: 'Ti.UI.Button' });
-    registry.registerElement('ImageView', () => Ti.UI.createImageView, { typeName: 'Ti.UI.ImageView' });
-    registry.registerElement('Label', () => Ti.UI.createLabel, { typeName: 'Ti.UI.Label' });
-    registry.registerElement('ListView', () => Ti.UI.createListView, { detached: true, detachChildren: true, typeName: 'Ti.UI.ListView' });
-    registry.registerElement('ListSection', () => Ti.UI.createListSection, { typeName: 'Ti.UI.ListSection' });
-    registry.registerElement('MaskedImage', () => Ti.UI.createMaskedImage, { typeName: 'Ti.UI.MaskedImage' });
-    registry.registerElement('NavigationWindow', () => Ti.UI.createNavigationWindow, { typeName: 'Ti.UI.NavigationWindow' });
-    registry.registerElement('OptionDialog', () => Ti.UI.createOptionDialog, { detached: true, typeName: 'Ti.UI.OptionDialog' });
-    registry.registerElement('Picker', () => Ti.UI.createPicker, { detachChildren: true, typeName: 'Ti.UI.Picker' });
-    registry.registerElement('PickerColumn', () => Ti.UI.createPickerColumn, { typeName: 'Ti.UI.PickerColumn' });
-    registry.registerElement('PickerRow', () => Ti.UI.createPickerRow, { typeName: 'Ti.UI.PickerRow' });
-    registry.registerElement('ProgressBar', () => Ti.UI.createProgressBar, { typeName: 'Ti.UI.ProgressBar' });
-    registry.registerElement('RefreshControl', () => Ti.UI.createRefreshControl, { detached: true, typeName: 'Ti.UI.RefreshControl' });
-    registry.registerElement('ScrollableView', () => Ti.UI.createScrollableView, { detachChildren: true, typeName: 'Ti.UI.ScrollableView' });
-    registry.registerElement('ScrollView', () => Ti.UI.createScrollView, { typeName: 'Ti.UI.ScrollView' });
-    registry.registerElement('SearchBar', () => Ti.UI.createSearchBar, { detached: true, typeName: 'Ti.UI.SearchBar' });
-    registry.registerElement('Slider', () => Ti.UI.createSlider, { typeName: 'Ti.UI.Slider' });
-    registry.registerElement('Switch', () => Ti.UI.createSwitch, { typeName: 'Ti.UI.Switch' });
-    registry.registerElement('Tab', () => Ti.UI.createTab, { detached: true, typeName: 'Ti.UI.Tab' });
-    registry.registerElement('TableView', () => Ti.UI.createTableView, { detached: true, detachChildren: true, typeName: 'Ti.UI.TableView' });
-    registry.registerElement('TableViewRow', () => Ti.UI.createTableViewRow, { typeName: 'Ti.UI.TableViewRow' });
-    registry.registerElement('TableViewSection', () => Ti.UI.createTableViewSection, { typeName: 'Ti.UI.TableViewSection' });
-    registry.registerElement('TabbedBar', () => Ti.UI.createTabbedBar, { typeName: 'Ti.UI.TabbedBar' });
-    registry.registerElement('TabGroup', () => Ti.UI.createTabGroup, { detached: true, typeName: 'Ti.UI.TabGroup' });
-    registry.registerElement('TextArea', () => Ti.UI.createTextArea, { typeName: 'Ti.UI.TextArea' });
-    registry.registerElement('TextField', () => Ti.UI.createTextField, { typeName: 'Ti.UI.TextField' });
-    registry.registerElement('Toolbar', () => Ti.UI.createToolbar, { detachChildren: true, typeName: 'Ti.UI.Toolbar' });
-    registry.registerElement('View', () => Ti.UI.createView, { typeName: 'Ti.UI.View' });
-    registry.registerElement('WebView', () => Ti.UI.createWebView, { typeName: 'Ti.UI.WebView' });
-    registry.registerElement('Window', () => Ti.UI.createWindow, { detached: true, typeName: 'Ti.UI.Window' });
+    registry.registerElement({
+        tagName: 'ActivityIndicator',
+        resolveFactory: () => Ti.UI.createActivityIndicator,
+        meta: {
+            typeName: 'Ti.UI.ActivityIndicator'
+        }
+    });
+    registry.registerElement({
+        tagName: 'AlertDialog',
+        resolveFactory: () => Ti.UI.createAlertDialog,
+        meta: {
+            typeName: 'Ti.UI.AlertDialog',
+            detached: true
+        }
+    });
+    registry.registerElement({
+        tagName: 'Button',
+        resolveFactory: () => Ti.UI.createButton,
+        meta: {
+            typeName: 'Ti.UI.Button'
+        }
+    });
+    registry.registerElement({
+        tagName: 'ImageView',
+        resolveFactory: () => Ti.UI.createImageView,
+        meta: {
+            typeName: 'Ti.UI.ImageView'
+        }
+    });
+    registry.registerElement({
+        tagName: 'Label',
+        resolveFactory: () => Ti.UI.createLabel,
+        meta: {
+            typeName: 'Ti.UI.Label'
+        }
+    });
+    registry.registerElement({
+        tagName: 'ListView',
+        resolveFactory: () => Ti.UI.createListView,
+        meta: {
+            typeName: 'Ti.UI.ListView',
+            detached: true,
+            detachChildren: true
+        }
+    });
+    registry.registerElement({
+        tagName: 'ListSection',
+        resolveFactory: () => Ti.UI.createListSection,
+        meta: {
+            typeName: 'Ti.UI.ListSection'
+        }
+    });
+    registry.registerElement({
+        tagName: 'MaskedImage',
+        resolveFactory: () => Ti.UI.createMaskedImage,
+        meta: {
+            typeName: 'Ti.UI.MaskedImage'
+        }
+    });
+    registry.registerElement({
+        tagName: 'NavigationWindow',
+        resolveFactory: () => Ti.UI.createNavigationWindow,
+        meta: {
+            typeName: 'Ti.UI.NavigationWindow',
+            detached: true
+        },
+        elementClass: NavigationWindowElement
+    });
+    registry.registerElement({
+        tagName: 'OptionDialog',
+        resolveFactory: () => Ti.UI.createOptionDialog,
+        meta: {
+            typeName: 'Ti.UI.OptionDialog',
+            detached: true
+        }
+    });
+    registry.registerElement({
+        tagName: 'Picker',
+        resolveFactory: () => Ti.UI.createPicker,
+        meta: {
+            typeName: 'Ti.UI.Picker',
+            detachChildren: true
+        }
+    });
+    registry.registerElement({
+        tagName: 'PickerColumn',
+        resolveFactory: () => Ti.UI.createPickerColumn,
+        meta: {
+            typeName: 'Ti.UI.PickerColumn',
+        }
+    });
+    registry.registerElement({
+        tagName: 'PickerRow',
+        resolveFactory: () => Ti.UI.createPickerRow,
+        meta: {
+            typeName: 'Ti.UI.PickerRow',
+        }
+    });
+    registry.registerElement({
+        tagName: 'ProgressBar',
+        resolveFactory: () => Ti.UI.createProgressBar,
+        meta: {
+            typeName: 'Ti.UI.ProgressBar',
+        }
+    });
+    registry.registerElement({
+        tagName: 'RefreshControl',
+        resolveFactory: () => Ti.UI.createRefreshControl,
+        meta: {
+            typeName: 'Ti.UI.RefreshControl',
+            detached: true
+        }
+    });
+    registry.registerElement({
+        tagName: 'ScrollableView',
+        resolveFactory: () => Ti.UI.createScrollableView,
+        meta: {
+            typeName: 'Ti.UI.ScrollableView',
+            detachChildren: true
+        }
+    });
+    registry.registerElement({
+        tagName: 'ScrollView',
+        resolveFactory: () => Ti.UI.createScrollView,
+        meta: {
+            typeName: 'Ti.UI.ScrollView',
+        }
+    });
+    registry.registerElement({
+        tagName: 'SearchBar',
+        resolveFactory: () => Ti.UI.createSearchBar,
+        meta: {
+            typeName: 'Ti.UI.SearchBar',
+            detached: true
+        }
+    });
+    registry.registerElement({
+        tagName: 'Slider',
+        resolveFactory: () => Ti.UI.createSlider,
+        meta: {
+            typeName: 'Ti.UI.Slider',
+        }
+    });
+    registry.registerElement({
+        tagName: 'Switch',
+        resolveFactory: () => Ti.UI.createSlider,
+        meta: {
+            typeName: 'Ti.UI.Switch',
+        }
+    });
+    registry.registerElement({
+        tagName: 'Tab',
+        resolveFactory: () => Ti.UI.createTab,
+        meta: {
+            typeName: 'Ti.UI.Tab',
+            detached: true
+        }
+    });
+    registry.registerElement({
+        tagName: 'TableView',
+        resolveFactory: () => Ti.UI.createTableView,
+        meta: {
+            typeName: 'Ti.UI.TableView',
+            detached: true,
+            detachChildren: true
+        }
+    });
+    registry.registerElement({
+        tagName: 'TableViewRow',
+        resolveFactory: () => Ti.UI.createTableViewRow,
+        meta: {
+            typeName: 'Ti.UI.TableViewRow',
+        }
+    });
+    registry.registerElement({
+        tagName: 'TableViewSection',
+        resolveFactory: () => Ti.UI.createTableViewSection,
+        meta: {
+            typeName: 'Ti.UI.TableViewSection',
+        }
+    });
+    registry.registerElement({
+        tagName: 'TabbedBar',
+        resolveFactory: () => Ti.UI.createTabbedBar,
+        meta: {
+            typeName: 'Ti.UI.TabbedBar',
+        }
+    });
+    registry.registerElement({
+        tagName: 'TabGroup',
+        resolveFactory: () => Ti.UI.createTabGroup,
+        meta: {
+            typeName: 'Ti.UI.TabGroup',
+            detached: true
+        }
+    });
+    registry.registerElement({
+        tagName: 'TextArea',
+        resolveFactory: () => Ti.UI.createTextArea,
+        meta: {
+            typeName: 'Ti.UI.TextArea',
+        }
+    });
+    registry.registerElement({
+        tagName: 'TextField',
+        resolveFactory: () => Ti.UI.createTextField,
+        meta: {
+            typeName: 'Ti.UI.TextField',
+        }
+    });
+    registry.registerElement({
+        tagName: 'Toolbar',
+        resolveFactory: () => Ti.UI.createToolbar,
+        meta: {
+            typeName: 'Ti.UI.Toolbar',
+            detachChildren: true
+        }
+    });
+    registry.registerElement({
+        tagName: 'View',
+        resolveFactory: () => Ti.UI.createView,
+        meta: {
+            typeName: 'Ti.UI.View',
+        }
+    });
+    registry.registerElement({
+        tagName: 'WebView',
+        resolveFactory: () => Ti.UI.createWebView,
+        meta: {
+            typeName: 'Ti.UI.WebView',
+        }
+    });
+    registry.registerElement({
+        tagName: 'Window',
+        resolveFactory: () => Ti.UI.createWindow,
+        meta: {
+            typeName: 'Ti.UI.Window',
+            detached: true
+        }
+    });
 }

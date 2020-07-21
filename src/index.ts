@@ -5,6 +5,7 @@ export * from './nodes/TextNode';
 
 export * from './elements/EmulatedRootElement';
 export * from './elements/InvisibleElement';
+export * from './elements/NavigationWindowElement';
 export * from './elements/TitaniumElement';
 
 export * from './registry/elements';

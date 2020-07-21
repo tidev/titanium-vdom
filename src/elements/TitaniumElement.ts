@@ -16,6 +16,15 @@ export interface ViewMetadata {
     [key: string]: any;
 }
 
+export interface TitaniumElementConstructor<T extends Titanium.Proxy> {
+    new (tagName?: string, createProxy?: ProxyFactory<T>, meta?: ViewMetadata): TitaniumElementInterface<T>;
+}
+
+export interface TitaniumElementInterface<T extends Titanium.Proxy> extends AbstractElement {
+    meta: ViewMetadata;
+    titaniumView: T;
+}
+
 const stringProperties = [
     'text',
     'title'
@@ -29,7 +38,7 @@ function hasOwnProperty(obj: any, name: string) {
     return Object.prototype.hasOwnProperty.call(obj, name);
 }
 
-export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
+export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement implements TitaniumElementInterface<T> {
 
     public meta: ViewMetadata;
 
@@ -201,7 +210,7 @@ export class TitaniumElement<T extends Titanium.Proxy> extends AbstractElement {
         }
     }
 
-    private insertChild<U extends Titanium.Proxy>(element: TitaniumElement<U>, atIndex?: number | null): void {
+    protected insertChild<U extends Titanium.Proxy>(element: TitaniumElement<U>, atIndex?: number | null): void {
         if (element.isDetached() || this.shouldDetachChildren()) {
             return;
         }
