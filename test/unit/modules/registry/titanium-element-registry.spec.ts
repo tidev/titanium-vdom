@@ -5,8 +5,16 @@ describe('TitaniumElementRegistry', () => {
 
     beforeEach(() => {
         registry = TitaniumElementRegistry.getInstance();
-        registry.registerElement('view', () => Ti.UI.createView, { typeName: 'Ti.UI.View' });
-        registry.registerElement('list-view', () => Ti.UI.createView, { typeName: 'Ti.UI.ListView' });
+        registry.registerElement({
+            tagName: 'view',
+            resolveFactory: () => Ti.UI.createView,
+            meta: { typeName: 'Ti.UI.View' }
+        });
+        registry.registerElement({
+            tagName: 'list-view',
+            resolveFactory: () => Ti.UI.createListView,
+            meta: { typeName: 'Ti.UI.ListView' }
+        });
     });
 
     afterEach(() => {
@@ -93,7 +101,11 @@ describe('TitaniumElementRegistry', () => {
                 typeName: 'Ti.UI.View',
                 some: 'data'
             };
-            registry.registerElement('the-view', () => Ti.UI.createView, expectedMetadata);
+            registry.registerElement({
+                tagName: 'the-view',
+                resolveFactory: () => Ti.UI.createView,
+                meta: expectedMetadata
+            });
             const actualMetadata = registry.getViewMetadata('the-view');
             expect(actualMetadata).toBeTruthy();
             expect(actualMetadata).toEqual(expectedMetadata);
