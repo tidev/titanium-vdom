@@ -1,3 +1,11 @@
+## [0.4.3](https://github.com/appcelerator/titanium-vdom/compare/0.4.2...0.4.3) (2020-07-21)
+
+
+### Features
+
+* dedicated navigation window element ([#51](https://github.com/appcelerator/titanium-vdom/issues/51)) ([046e0fb](https://github.com/appcelerator/titanium-vdom/commit/046e0fb02c8e0aecbdd30edeb91fe839b3ea93f9))
+
+
 ## [0.4.2](https://github.com/appcelerator/titanium-vdom/compare/0.4.1...0.4.2) (2020-07-20)
 
 
