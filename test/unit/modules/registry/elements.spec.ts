@@ -1,6 +1,6 @@
 import {
-    TitaniumElementRegistry,
-    NavigationWindowElement
+    NavigationWindowElement,
+    TitaniumElementRegistry
 } from 'vdom/index';
 
 // these two dummy imports are required for the dynamic import to work in karma-typescript
