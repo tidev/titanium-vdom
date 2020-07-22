@@ -1,6 +1,6 @@
 {
   "name": "titanium-vdom",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "A virtual DOM implementation for Titanium",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

@@ -1,3 +1,11 @@
+## [0.4.4](https://github.com/appcelerator/titanium-vdom/compare/0.4.3...0.4.4) (2020-07-22)
+
+
+### Bug Fixes
+
+* store element class in metadata ([2d805e3](https://github.com/appcelerator/titanium-vdom/commit/2d805e3a090e7bfc6fdfb1df1ad868e685117583))
+
+
 ## [0.4.3](https://github.com/appcelerator/titanium-vdom/compare/0.4.2...0.4.3) (2020-07-21)
 
 
