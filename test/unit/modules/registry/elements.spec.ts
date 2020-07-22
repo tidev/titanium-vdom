@@ -1,4 +1,7 @@
-import { TitaniumElementRegistry } from 'vdom/index';
+import {
+    TitaniumElementRegistry,
+    NavigationWindowElement
+} from 'vdom/index';
 
 // these two dummy imports are required for the dynamic import to work in karma-typescript
 import * as _1 from '../../../../src/registry/elements.android';
@@ -98,5 +101,11 @@ describe('element registration', () => {
             const factoryFunction = registry.getViewFactory(elementName);
             expect(factoryFunction).toEqual(jasmine.any(Function), `Expected element ${elementName} to have factory function.`);
         });
+    });
+
+    it('should register custom element classes', () => {
+        registerTitaniumElements(registry);
+        const nav = registry.getElement('navigation-window');
+        expect(nav.elementClass).toBe(NavigationWindowElement);
     });
 });

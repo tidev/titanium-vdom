@@ -41,12 +41,13 @@ export class TitaniumElementRegistry {
     }
 
     public registerElement<T extends Titanium.Proxy>(options: ElementOptions<T>): void {
-        const { meta, resolveFactory } = options;
+        const { meta, resolveFactory, elementClass } = options;
         const tagName = normalizeTagName(options.tagName);
         if (!this.hasElement(tagName)) {
             this.elements.set(tagName.toLowerCase(), {
                 resolveFactory,
-                meta: Object.assign({}, this.defaultViewMetadata, meta)
+                meta: Object.assign({}, this.defaultViewMetadata, meta),
+                elementClass
             });
         } else if (typeof Ti !== 'undefined') {
             Ti.API.warn(`Element <${tagName}> already registered. Unregister the current one before trying to register it again.`);
